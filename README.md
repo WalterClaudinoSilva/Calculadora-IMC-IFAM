@@ -42,5 +42,4 @@ Para os alunos que desejam praticar:
 O repositório inclui o arquivo `aula-configuracao-imc.html`, que contém o passo a passo detalhado da configuração do ambiente e da estrutura inicial do projeto.
 
 ---
-**Desenvolvido por:** Walter Claudino da Silva Júnior
-**Instituição:** IFAM Campus Manacapuru
+**Desenvolvido por:** Walter Claudino da Silva Júnior / **Instituição:** IFAM Campus Manacapuru
