@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso Completo: Calculadora de IMC IFAM</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --ifam-green: #008037;
+      --ifam-yellow: #FFC72C;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      background-color: #f4f6f9;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 250px;
+      background-color: #343a40;
+      color: white;
+      padding-top: 20px;
+      overflow-y: auto;
+      z-index: 1000;
+    }
+
+    .sidebar a {
+      color: #adb5bd;
+      text-decoration: none;
+      display: block;
+      padding: 10px 20px;
+      font-size: 0.9rem;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      color: white;
+      background-color: var(--ifam-green);
+    }
+
+    .sidebar {
+      padding-bottom: 80px;
+    }
+
+
+    .content-area {
+      margin-left: 250px;
+      padding: 0;
+    }
+
+    .slide {
+      min-height: 100vh;
+      padding: 60px 40px;
+      background-color: white;
+      border-bottom: 5px solid #dee2e6;
+    }
+
+    .slide:nth-child(even) {
+      background-color: #fdfdfd;
+    }
+
+    .slide-badge {
+      background-color: var(--ifam-green);
+      color: var(--ifam-yellow);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      display: inline-block;
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+    }
+
+    .code-block {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: monospace;
+      font-size: 1rem;
+      border-left: 4px solid var(--ifam-yellow);
+      margin-bottom: 20px;
+      white-space: pre-wrap;
+    }
+
+    .explanation {
+      background-color: #e8f5e9;
+      border: 1px solid #c8e6c9;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 15px;
+      font-size: 1.05rem;
+    }
+
+    .highlight {
+      background-color: #fff3cd;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    h2.title {
+      color: var(--ifam-green);
+      font-weight: bold;
+      margin-bottom: 25px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+
+      .content-area {
+        margin-left: 0;
+      }
+
+      .slide {
+        padding: 40px 20px;
+      }
+    @media print {
+      @page {
+        size: A4 landscape;
+        margin: 0.5cm;
+      }
+      body {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        zoom: 0.7; /* Force scaling to fit everything */
+      }
+      .sidebar {
+        display: none !important;
+      }
+      .content-area {
+        margin-left: 0 !important;
+      }
+      .slide {
+        page-break-after: always !important;
+        break-after: page !important;
+        min-height: 100vh !important;
+        height: 100vh !important;
+        overflow: hidden !important;
+        padding: 40px !important;
+        border-bottom: none !important;
+        background-color: white !important;
+      }
+    }
+  </style>
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#sidebar-menu">
+
+  <!-- Sidebar de Navegação -->
+  <div class="sidebar" id="sidebar-menu">
+    <h5 class="text-center text-white mb-4"><i class="fas fa-mobile-alt text-success"></i> Curso IMC IFAM</h5>
+    <h6 class="px-3 text-uppercase text-muted">Módulo 1: Fundamentos</h6>
+    <a href="#slide-1">1. Apresentação do Projeto</a>
+    <a href="#slide-2">2. Bem-vindos</a>
+    <a href="#slide-3">3. O Android Studio</a>
+    <a href="#slide-4">4. Atalhos Essenciais</a>
+    <a href="#slide-5">5. Front-end vs Back-end</a>
+    <a href="#slide-6">6. Estrutura de Pastas</a>
+    <a href="#slide-7">7. O Gradle</a>
+    <h6 class="px-3 mt-3 text-uppercase text-muted">Módulo 2: Assets</h6>
+    <a href="#slide-8">8. Pasta Drawable</a>
+    <a href="#slide-9">9. Background (Shape)</a>
+    <a href="#slide-10">10. Background (Gradient)</a>
+    <a href="#slide-11">11. Vetores (wave.xml)</a>
+    <a href="#slide-12">12. O Path SVG</a>
+    <a href="#slide-13">13. Imagens Bitmap (logo)</a>
+    <a href="#slide-14">14. Google Fonts</a>
+    <a href="#slide-15">15. Baixando a Fonte</a>
+    <a href="#slide-16">16. Cores (colors.xml)</a>
+    <a href="#slide-17">17. Textos (strings.xml)</a>
+    <h6 class="px-3 mt-3 text-uppercase text-muted">Módulo 3: Interface XML</h6>
+    <a href="#slide-18">18. ConstraintLayout</a>
+    <a href="#slide-19">19. Namespaces XML</a>
+    <a href="#slide-20">20. Logo: Tamanhos</a>
+    <a href="#slide-21">21. Logo: Constraints</a>
+    <a href="#slide-22">22. Título Principal</a>
+    <a href="#slide-23">23. Input Peso (0dp)</a>
+    <a href="#slide-24">24. Hint do Peso</a>
+    <a href="#slide-25">25. Label Altura</a>
+    <a href="#slide-26">26. O componente SeekBar</a>
+    <a href="#slide-27">27. SeekBar Limites</a>
+    <a href="#slide-28">28. Label Dinâmico (Gone)</a>
+    <a href="#slide-29">29. Texto de Resultado</a>
+    <a href="#slide-30">30. Botão Limpar</a>
+    <a href="#slide-31">31. Botão Calcular</a>
+    <a href="#slide-32">32. View Decorativa (Trapézio)</a>
+    <a href="#slide-33">33. Tela Completa</a>
+    <h6 class="px-3 mt-3 text-uppercase text-muted">Módulo 4: Kotlin (Cérebro)</h6>
+    <a href="#slide-34">34. O que é Kotlin</a>
+    <a href="#slide-35">35. Package</a>
+    <a href="#slide-36">36. Imports</a>
+    <a href="#slide-37">37. Classe e Herança</a>
+    <a href="#slide-38">38. onCreate (Ciclo de Vida)</a>
+    <a href="#slide-39">39. Edge to Edge</a>
+    <a href="#slide-40">40. setContentView</a>
+    <a href="#slide-41">41. Insets</a>
+    <a href="#slide-42">42. findViewById (Peso)</a>
+    <a href="#slide-43">43. Outras Constantes</a>
+    <a href="#slide-44">44. Listener do SeekBar</a>
+    <a href="#slide-45">45. onProgressChanged</a>
+    <a href="#slide-46">46. Alterando UI (Visible)</a>
+    <a href="#slide-47">47. Clique do Botão</a>
+    <a href="#slide-48">48. O Bloco Try/Catch</a>
+    <a href="#slide-49">49. A Conversão Dupla</a>
+    <a href="#slide-50">50. A Fórmula Matemática</a>
+    <a href="#slide-51">51. String.format &amp; Toast</a>
+    <h6 class="px-3 mt-3 text-uppercase text-muted">Módulo 5: Deploy</h6>
+    <a href="#slide-52">52. A pasta mipmap</a>
+    <a href="#slide-53">53. Image Asset Studio</a>
+    <a href="#slide-54">54. Celular Desenvolvedor</a>
+    <a href="#slide-55">55. Executando o App</a>
+    <hr class="border-secondary">
+    <h6 class="px-3 text-uppercase text-muted fw-bold">M&oacute;dulo 6: B&ocirc;nus</h6>
+    <a href="#slide-56">56. Refatora&ccedil;&atilde;o: Novo Campo (Idade)</a>
+    <a href="#slide-57">57. Refatora&ccedil;&atilde;o: L&oacute;gica e Exibi&ccedil;&atilde;o</a>
+    <a href="#slide-58">58. Exerc&iacute;cio Desafio: Autoria</a>
+  </div>
+
+  <div class="content-area">
+
+    <!-- ==============================================
+         MÓDULO 1: FUNDAMENTOS
+         ============================================== -->
+
+    
+    <section id="slide-1" class="slide" style="display: flex; align-items: center; justify-content: center; background-color: #f4fdf6; color: #333333;">
+      <div class="container text-center">
+        <i class="fas fa-graduation-cap" style="font-size: 6rem; color: #008037; margin-bottom: 20px;"></i>
+        <h1 class="display-4 font-weight-bold mb-4" style="color: #004D21; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Calculadora de IMC</h1>
+        <h3 class="mb-5" style="color: #008037;">App de Ensino Inicial</h3>
+        
+        <div class="card p-4 mx-auto" style="max-width: 600px; background-color: #ffffff; border: 2px solid #98c29c; box-shadow: 0 10px 30px rgba(0,128,55,0.1); border-radius: 15px; text-align: left; color: #444444;">
+          <h4 style="color: #008037; margin-bottom: 15px; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px;">
+            <i class="fas fa-university"></i> Instituto Federal do Amazonas - IFAM
+          </h4>
+          <p class="mb-2"><strong>Campus:</strong> Manacapuru</p>
+          <p class="mb-2"><strong>Curso:</strong> Programação de Jogos Digitais</p>
+          <p class="mb-2"><strong>Disciplina:</strong> Desenvolvimentos de Jogos para Mobile</p>
+          <p class="mb-0"><strong>Professor:</strong> Me. Walter Claudino da Silva Júnior</p>
+        </div>
+        
+        <div class="mt-5">
+          <div class="slide-badge" style="background-color: #008037; color: white;">Slide 01/58</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-2" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 02/58</div>
+        <h2 class="title"><i class="fas fa-graduation-cap"></i> Bem-vindos à Calculadora de IMC IFAM</h2>
+        <div class="text-center my-4">
+          <i class="fab fa-android text-success" style="font-size: 8rem;"></i>
+        </div>
+        <div class="explanation">
+          <p>Nesta jornada épica de 50 passos, nós vamos destrinchar cada milímetro do código que você usou para
+            construir a <strong>Calculadora de IMC IFAM</strong>. Este não é um tutorial de "copiar e colar".</p>
+          <h4 class="mt-4 text-success">Quais são os nossos objetivos pedagógicos com este projeto?</h4>
+          <ul>
+            <li><strong>Compreender a Arquitetura Android:</strong> Entender como o Front-end (XML visual) e o Back-end
+              (Kotlin lógico) trabalham de forma separada, porém perfeitamente conectada.</li>
+            <li><strong>Dominar o Design Responsivo:</strong> Aprender a criar interfaces poderosas com
+              <code>ConstraintLayout</code> que se adaptam matematicamente a telas pequenas de celulares antigos ou a
+              telas gigantes de tablets modernos, sem perder o alinhamento.</li>
+            <li><strong>Lógica de Programação Segura:</strong> Desenvolver algoritmos que não apenas calculam o Índice
+              de Massa Corporal (IMC) corretamente segundo a Organização Mundial da Saúde (OMS), mas que também
+              "preveem" erros humanos (como clicar no botão sem digitar o peso). O aluno aprenderá a usar "Escudos"
+              (<code>try/catch</code>) para evitar que o aplicativo feche bruscamente ("Crash").</li>
+            <li><strong>Gerenciamento de Assets Visuais:</strong> Entender a diferença vital entre usar imagens
+              fotográficas pesadas e criar elementos usando matemática pura através de vetores (SVG e Shapes), gerando
+              um aplicativo levíssimo e sem perda de resolução.</li>
+            <li><strong>Publicação Física (Deploy):</strong> Ao final do módulo, o aluno saberá como quebrar as travas
+              de fabricante do seu celular Android habilitando o modo desenvolvedor e rodando seu próprio código
+              fisicamente via cabo USB.</li>
+          </ul>
+          <p class="mt-3 text-muted"><strong>Aviso ao Aluno:</strong> Se você absorver os "porquês" por trás de cada
+            linha explicada nesta documentação, você terá a base necessária para criar <em>qualquer</em> outro
+            aplicativo de formulário no futuro.</p>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-3" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 03/58</div>
+        <h2 class="title"><i class="fas fa-laptop-code"></i> O que é o Android Studio?</h2>
+        <div class="explanation">
+          <p>O <strong>Android Studio</strong> é a ferramenta de trabalho oficial criada pelo Google. Ele não é apenas
+            um editor de textos; ele é classificado como uma <strong>IDE</strong> (Ambiente de Desenvolvimento
+            Integrado). Mas o que isso significa na prática?</p>
+          <p>Significa que ele é um "canivete suíço" gigante que esconde a complexidade de criar um aplicativo. Se você
+            não usasse o Android Studio, precisaria usar o bloco de notas para programar, abrir uma tela preta
+            (terminal) para compilar, baixar arquivos zip do Google manualmente e enviar o app por cabo para o celular
+            digitando comandos longos. A IDE faz tudo isso com um clique!</p>
+          <h4 class="mt-4 text-success">Os 4 Motores Internos do Android Studio:</h4>
+          <ul>
+            <li><strong>Editor Inteligente (IntelliSense/Code Completion):</strong> Você não precisa decorar códigos
+              difíceis. O Android Studio prevê o que você quer digitar. Se você começa a digitar <code>Butt...</code>,
+              ele completa para <code>Button</code> e já importa os pacotes necessários de forma automática, apontando e
+              corrigindo erros de sintaxe em tempo real antes mesmo de você salvar.</li>
+            <li><strong>Emulador Integrado (AVD):</strong> Ele possui celulares e tablets "virtuais" (Android Virtual
+              Device) rodando dentro da memória do seu computador. Isso permite testar o aplicativo simulando toques,
+              rotação de tela, GPS e até fingindo receber mensagens, sem precisar de um aparelho físico.</li>
+            <li><strong>O Dicionário SDK (Software Development Kit):</strong> O Android Studio baixa automaticamente as
+              "regras de tradução" do Android. É o SDK que ensina ao seu computador, por exemplo, como a interface de
+              uma câmera funciona no Android 14.</li>
+            <li><strong>Design Visual (Layout Editor):</strong> Permite que você construa o visual do aplicativo
+              arrastando botões e caixas de texto com o mouse, gerando o código XML automaticamente por baixo dos panos,
+              e visualizando o design da tela em vários tamanhos de celulares diferentes simultaneamente.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="slide-4" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 04/58</div>
+        <h2 class="title"><i class="fas fa-keyboard"></i> Atalhos Essenciais do Android Studio</h2>
+        <div class="explanation">
+          <p>Um programador profissional não clica com o mouse para tudo. O domínio das "Hotkeys" (Teclas de Atalho) é o que separa os iniciantes dos mestres. Aqui está a Tabela Oficial de Sobrevivência para você ganhar velocidade máxima:</p>
+          <div class="table-responsive mt-4">
+            <table class="table table-bordered table-striped table-hover">
+              <thead style="background-color: #008037; color: white;">
+                <tr>
+                  <th>Função (O que faz)</th>
+                  <th>Windows / Linux</th>
+                  <th>macOS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Reformatar código</strong> (Auto-Indentação Mágica)</td><td><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>L</kbd></td><td><kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>L</kbd></td></tr>
+                <tr><td>Reformatar com opções avançadas</td><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>L</kbd></td><td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Opt</kbd> + <kbd>L</kbd></td></tr>
+                <tr><td>Otimizar imports (Limpar lixo)</td><td><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>O</kbd></td><td><kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>O</kbd></td></tr>
+                <tr><td>Comentar/Descomentar linha única</td><td><kbd>Ctrl</kbd> + <kbd>/</kbd></td><td><kbd>Cmd</kbd> + <kbd>/</kbd></td></tr>
+                <tr><td>Comentar bloco inteiro (/* ... */)</td><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>/</kbd></td><td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>/</kbd></td></tr>
+                <tr><td>Duplicar linha/seleção para baixo</td><td><kbd>Ctrl</kbd> + <kbd>D</kbd></td><td><kbd>Cmd</kbd> + <kbd>D</kbd></td></tr>
+                <tr><td>Apagar linha atual (Deletar)</td><td><kbd>Ctrl</kbd> + <kbd>Y</kbd></td><td><kbd>Cmd</kbd> + <kbd>Delete</kbd></td></tr>
+                <tr><td>Mover a linha inteira para cima/baixo</td><td><kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>↑</kbd> / <kbd>↓</kbd></td><td><kbd>Opt</kbd> + <kbd>Shift</kbd> + <kbd>↑</kbd> / <kbd>↓</kbd></td></tr>
+                <tr><td>Renomear de forma segura (Refactor)</td><td><kbd>Shift</kbd> + <kbd>F6</kbd></td><td><kbd>Shift</kbd> + <kbd>F6</kbd></td></tr>
+                <tr><td>Gerar código (Getters, Setters, etc.)</td><td><kbd>Alt</kbd> + <kbd>Insert</kbd></td><td><kbd>Cmd</kbd> + <kbd>N</kbd></td></tr>
+                <tr><td>Executar projeto (Dar Play)</td><td><kbd>Shift</kbd> + <kbd>F10</kbd></td><td><kbd>Ctrl</kbd> + <kbd>R</kbd></td></tr>
+                <tr><td>Depurar projeto (Debug/Bug Hunter)</td><td><kbd>Shift</kbd> + <kbd>F9</kbd></td><td><kbd>Ctrl</kbd> + <kbd>D</kbd></td></tr>
+                <tr><td>Abrir busca de ação geral (Comandos)</td><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd></td><td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd></td></tr>
+                <tr><td>Abrir arquivo rapidamente (Procurar)</td><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd></td><td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd></td></tr>
+                <tr><td>Abrir Classe Kotlin rapidamente</td><td><kbd>Ctrl</kbd> + <kbd>N</kbd></td><td><kbd>Cmd</kbd> + <kbd>O</kbd></td></tr>
+                <tr><td>Ir para uma linha específica</td><td><kbd>Ctrl</kbd> + <kbd>G</kbd></td><td><kbd>Cmd</kbd> + <kbd>L</kbd></td></tr>
+                <tr><td>Ir para definição (Mergulhar no código)</td><td><kbd>Ctrl</kbd> + <kbd>B</kbd> ou <kbd>Ctrl</kbd> + Clique</td><td><kbd>Cmd</kbd> + <kbd>B</kbd> ou <kbd>Cmd</kbd> + Clique</td></tr>
+                <tr><td>Buscar palavra em TODO o projeto</td><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd></td><td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+<section id="slide-5" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 05/58</div>
+        <h2 class="title"><i class="fas fa-columns"></i> O Paradigma Front-end vs Back-end</h2>
+        <div class="explanation">
+          <p>Diferente de sistemas web mais antigos ou pequenos scripts onde visual e lógica ficam embolados num único
+            arquivo, o sistema Android força o desenvolvedor a usar uma arquitetura estritamente separada. Isso evita
+            bagunça estrutural em projetos gigantes.</p>
+          <p>Pense na construção de um carro: uma equipe projeta a lataria, os bancos e a pintura (o visual e conforto),
+            e outra equipe constrói o motor e a injeção eletrônica (a inteligência). No Android, funciona exatamente
+            assim:</p>
+
+          <h4 class="mt-4 text-success">1. O Front-end: A Casca e o Design (Arquivos XML)</h4>
+          <ul>
+            <li><strong>A Linguagem Passiva:</strong> Usamos arquivos com a extensão <code>.xml</code> (eXtensible
+              Markup Language). A única responsabilidade do XML é ditar coordenadas para o celular: "Desenhe um
+              retângulo verde aqui", "Coloque um texto azul ali".</li>
+            <li><strong>A "Cegueira" do Front-end:</strong> Um arquivo XML é burro. Ele não "pensa". Se você construir
+              um botão verde via XML, ele será lindo, mas você pode apertá-lo um milhão de vezes e absolutamente
+              <em>nada</em> acontecerá. O XML não sabe fazer somas, multiplicar ou salvar arquivos. Ele apenas "veste o
+              manequim" na vitrine.</li>
+          </ul>
+
+          <h4 class="mt-4 text-success">2. O Back-end: O Motor e o Cérebro (Arquivos Kotlin)</h4>
+          <ul>
+            <li><strong>A Inteligência Ativa:</strong> Usamos arquivos com a extensão <code>.kt</code> (Kotlin). Esta é
+              uma linguagem de programação pesada, voltada para processamento de algoritmos e interação com a CPU do
+              aparelho. O Kotlin não sabe desenhar botões bonitos. O mundo dele é pura matemática e lógica de
+              processamento.</li>
+            <li><strong>A Conexão (O Casamento Perfeito):</strong> O Kotlin funciona como o sistema nervoso central
+              oculto atrás da tela do celular. Nós programamos o Kotlin para lançar "fios" até o XML e agarrar o botão
+              visual. Instalamos ouvidos biônicos nesse botão (os chamados <em>Listeners</em>). A partir desse momento,
+              quando o usuário aperta a tela (Front-end), o Kotlin (Back-end) escuta o clique instantaneamente, captura
+              as palavras digitadas, processa a matemática do IMC e injeta a resposta de volta no XML, alterando o texto
+              que o usuário vê!</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-6" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 06/58</div>
+        <h2 class="title"><i class="fas fa-folder-tree"></i> A Estrutura de Pastas: A Tríade do Android</h2>
+        <div class="code-block">
+          <pre style="margin: 0; color: #d4d4d4; font-family: monospace;">
+app/
+├── manifests/
+│   └── AndroidManifest.xml
+├── java/
+│   └── br.com.roboticminds.calculadoradeimc_ifam
+│       └── MainActivity.kt
+└── res/
+    ├── drawable/  (Imagens e Vetores)
+    ├── font/      (Tipografia)
+    ├── layout/    (Telas XML)
+    ├── mipmap/    (Ícones do App)
+    └── values/    (Cores e Textos globais)
+</pre>
+        </div>
+        <div class="explanation">
+          <p>Você tem razão sobre a deformidade! Sem a tag especial <code>&lt;pre&gt;</code>, o navegador "esmagava" os
+            espaços do desenho. Agora a árvore está preservada. Quando você cria um projeto no Android Studio, ele gera
+            dezenas de pastas automáticas. Mas para programar de verdade, focamos 100% da nossa energia em apenas três
+            lugares essenciais. É a "Tríade de Ouro" do Android:</p>
+
+          <h4 class="mt-4 text-success">1. Manifests (O Passaporte de Identidade)</h4>
+          <p>O arquivo <code>AndroidManifest.xml</code> é o documento mais importante para o Sistema Operacional do
+            celular. Antes do Android permitir a instalação do app, ele lê este arquivo de cima a baixo. É aqui que
+            declaramos o nome do aplicativo, qual é o ícone oficial que vai pra tela do celular e qual tela deve ser
+            carregada primeiro quando o usuário clicar no ícone. Mais importante ainda: é no Manifest que pedimos
+            <strong>Permissões</strong>. Se o seu app precisar usar a Câmera ou a Internet, e você não declarar uma tag
+            de permissão aqui, o Android (Google) bloqueia o acesso de forma implacável por segurança.</p>
+
+          <h4 class="mt-4 text-success">2. Java (O Cofre do Cérebro)</h4>
+          <p>Apesar do nome da pasta ser "java" por uma questão histórica de engenharia reversa do Google, é aqui dentro
+            que moram todos os nossos modernos arquivos <strong>Kotlin (.kt)</strong>. Todo o sistema nervoso, o
+            "Back-end", a matemática da divisão por 100 e a inteligência lógica que programamos ficam seguramente
+            organizados dentro do nosso <em>Package</em> (que é como se fosse o nosso CEP na loja de aplicativos da Play
+            Store).</p>
+
+          <h4 class="mt-4 text-success">3. Res (O Guarda-Roupa Visual)</h4>
+          <p>A palavra "Res" é o apelido carinhoso para <strong>Resources</strong> (Recursos). Absolutamente tudo que é
+            arte, design e enfeite fica restrito a esta pasta. A organização é levada a níveis militares:</p>
+          <ul>
+            <li><strong>drawable/:</strong> Guarda arte pura (Formas, cores sólidas, vetores SVG e imagens de logo).
+            </li>
+            <li><strong>layout/:</strong> É a prancheta de desenho das Telas. O famoso arquivo visual
+              <code>activity_main.xml</code> mora aqui.</li>
+            <li><strong>mipmap/:</strong> Esta pasta é "blindada" e serve <em>exclusivamente</em> para abrigar os ícones
+              do aplicativo que vão para a tela inicial do aparelho do usuário (Launcher icons). Ela entrega resoluções
+              variadas para que o ícone nunca fique embaçado.</li>
+            <li><strong>values/:</strong> Uma pasta genial para variáveis de design (como <code>colors.xml</code> e
+              <code>strings.xml</code>). Se você pintar 50 telas diferentes do app de "Verde IFAM" e amanhã o instituto
+              mudar o logo para Azul, você NÃO precisa abrir as 50 telas para alterar a cor. Você abre a pasta
+              <code>values</code>, altera o código hexadecimal lá, e as 50 telas ficam azuis em 1 segundo. Isso é
+              arquitetura profissional!</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-7" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 07/58</div>
+        <h2 class="title"><i class="fas fa-cogs"></i> O Gradle</h2>
+        <div class="explanation">
+          <p>Você com certeza já notou uma barrinha verde demorando para carregar na parte inferior do Android Studio
+            escrito "<em>Gradle Build Running</em>". Mas o que exatamente ele está fazendo?</p>
+          <p>Se o Android Studio fosse uma fábrica de automóveis, o <strong>Gradle</strong> seria a linha de montagem e
+            o engenheiro-chefe. Ele é um sistema avançado de automação de construção (Build Automation Tool).</p>
+
+          <h4 class="mt-4 text-success">O que o Gradle faz na prática?</h4>
+          <ul>
+            <li><strong>O Coletor de Bibliotecas:</strong> O Gradle viaja até os servidores na internet em milissegundos
+              e baixa automaticamente códigos prontos do Google ou de terceiros (como bibliotecas gráficas ou de
+              internet) que você declara no arquivo <code>build.gradle.kts</code>. Você não precisa baixar e instalar
+              arquivos ".zip" manualmente.</li>
+            <li><strong>O Compilador Criptografado:</strong> O celular não consegue ler o idioma "Kotlin" puramente
+              humano que você escreveu. O Gradle traduz o seu código para uma linguagem bruta de máquina (Bytecode),
+              hiper-rápida, que o processador do smartphone consegue executar de forma instantânea.</li>
+            <li><strong>O Empacotador (Packager):</strong> O celular não roda pastas soltas. O Gradle junta toda a
+              lógica matemática compilada, compacta todas as imagens da pasta <em>res</em>, insere a identidade do
+              <em>Manifest</em>, e funde tudo isso num único bloco de software blindado.</li>
+          </ul>
+
+          <h4 class="mt-4 text-success">A Geração do Produto Final (APK)</h4>
+          <p>O resultado que o Gradle ejeta no final desta pesada linha de montagem é o aplicativo de fato: um arquivo
+            de formato <strong>.APK</strong> (Android Package Kit) ou <strong>.AAB</strong> (Android App Bundle). É este
+            pacote assinado digitalmente pelo Gradle que nós enviamos para a Google Play Store para ser distribuído ao
+            mundo inteiro.</p>
+          <p class="text-muted mt-3"><i class="fas fa-info-circle"></i> <strong>Aviso ao Aluno:</strong> Seu projeto
+            Android sempre terá dois arquivos Gradle. Um de Nível de Projeto (controla configurações globais) e um de
+            Nível de Módulo (onde definimos regras específicas, como a versão mínima do Android que nosso app aceita).
+          </p>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-8" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 08/58</div>
+        <h2 class="title"><i class="fas fa-images"></i> A Pasta Drawable: Bitmap vs Vetor</h2>
+        <div class="explanation">
+          <p>Dentro da pasta <code>res/drawable/</code> nós alocamos os recursos visuais brutos do aplicativo. Mas aqui
+            existe um segredo de ouro do desenvolvimento mobile: <strong>A Guerra entre Bitmaps e Vetores.</strong></p>
+          <p>Se você colocar um arquivo <code>.jpg</code> ou <code>.png</code> (Bitmaps) lá dentro, ele terá um tamanho
+            físico fixo (ex: 500x500 pixels). Se um usuário abrir o seu app num tablet de 12 polegadas, o Android terá
+            que esticar essa imagem. O resultado? Uma imagem feia, borrada e "pixelada". Além disso, imagens
+            fotográficas deixam o arquivo do aplicativo extremamente pesado (GigaBytes).</p>
+          <p>A solução moderna? <strong>Vetores (Arquivos XML).</strong> Em vez de desenhar os pixels, nós damos uma
+            <em>equação matemática</em> para o processador do celular. A CPU calcula e desenha a forma em tempo real na
+            tela. Se você esticar um Vetor para o tamanho do planeta Terra, ele terá a qualidade gráfica perfeita, pois
+            matemática não perde resolução!</p>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-9" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 09/58</div>
+        <h2 class="title"><i class="fas fa-file-code"></i> Dissecando o background.xml (A Forma)</h2>
+        <div class="code-block">
+          <pre style="margin: 0;">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"&gt;
+</pre>
+        </div>
+        <div class="explanation">
+          <p>Vamos analisar a criação do nosso fundo verde linha a linha:</p>
+          <div class="line-explanation"><strong>&lt;?xml version="1.0"...?&gt;</strong>: A assinatura obrigatória. Avisa
+            ao celular que este arquivo segue as regras de estruturação XML universais na codificação UTF-8 (que aceita
+            acentos).</div>
+          <div class="line-explanation"><strong>&lt;shape ...&gt;</strong>: Abre a tag de "Forma". Isso diz ao Android
+            Studio que nós não queremos uma foto, nós queremos gerar uma forma geométrica matemática.</div>
+          <div class="line-explanation"><strong>xmlns:android="..."</strong>: Define o dicionário de palavras. Ensina ao
+            arquivo o que a palavra "android" significa, importando os esquemas oficiais do Google.</div>
+          <div class="line-explanation"><strong>android:shape="rectangle"</strong>: O comando mestre. Pede ao
+            processador gráfico para desenhar um Retângulo perfeito que, por padrão, tentará preencher todo o espaço
+            onde for invocado.</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-10" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 10/58</div>
+        <h2 class="title"><i class="fas fa-fill-drip"></i> Dissecando o background.xml (O Gradiente)</h2>
+        <div class="code-block">
+          <pre style="margin: 0;">
+    &lt;gradient
+        android:angle="175"
+        android:startColor="@color/ifam_green_light"
+        android:endColor="@color/ifam_green_dark"
+        android:type="linear"/&gt;
+&lt;/shape&gt;
+</pre>
+        </div>
+        <div class="explanation">
+          <p>Um retângulo transparente não serve para nada. Precisamos pintá-lo internamente usando a tag
+            <code>&lt;gradient&gt;</code>:</p>
+          <div class="line-explanation"><strong>android:type="linear"</strong>: Define que a transição de cores será uma
+            linha reta (não será um círculo do centro para as bordas, como no tipo "radial").</div>
+          <div class="line-explanation"><strong>android:startColor="@color/ifam_green_light"</strong>: A cor inicial. O código HEX
+            <code>#98c29c</code> representa o exato tom de verde-claro institucional que nós escolhemos.</div>
+          <div class="line-explanation"><strong>android:endColor="@color/ifam_green_dark"</strong>: A cor final. É o verde institucional profundo e mais
+            escuro. O celular fará a transição suave de uma para a outra.</div>
+          <div class="line-explanation"><strong>android:angle="175"</strong>: O toque de Mestre! Em vez de a cor ir da
+            esquerda (0º) para a direita, ou de baixo para cima (90º), nós giramos a pintura em exatos 175 graus. Isso
+            cria aquele efeito de inclinação super moderno e dinâmico que os grandes apps usam hoje em dia.</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-11" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 11/58</div>
+        <h2 class="title"><i class="fas fa-draw-polygon"></i> Vetores Matemáticos (wave.xml)</h2>
+        <div class="code-block">
+          <pre style="margin: 0;">
+&lt;vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="1440dp"
+    android:height="320dp"
+    android:viewportWidth="1440"
+    android:viewportHeight="320"&gt;
+</pre>
+        </div>
+        <div class="explanation">
+          <p>Lembra da forma de Trapézio (antiga onda) no rodapé do nosso projeto? Ela é gerada pelo <code>wave.xml</code> usando a
+            poderosa tag <code>&lt;vector&gt;</code> (O equivalente Android para arquivos SVG).</p>
+          <div class="line-explanation"><strong>width e height:</strong> Definem o tamanho "sugerido" do vetor na tela
+            (ex: 1440dp). Mas a mágica está nas linhas de baixo.</div>
+          <div class="line-explanation"><strong>viewportWidth e viewportHeight:</strong> Este é o segredo! Eles criam
+            uma "lousa matemática virtual" interna. Nós dissemos ao Android: "Crie uma lousa mental de 1440 por 320
+            pedaços". O desenho do trapézio será feito exatamente dentro dessa lousa. Se a tela do usuário tiver apenas 400
+            pixels de largura, o Android encolhe toda a lousa mantendo a proporção matemática perfeita da forma.</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-12" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 12/58</div>
+        <h2 class="title"><i class="fas fa-route"></i> Dissecando o Trapézio (O atributo Path)</h2>
+        <div class="code-block">
+          <pre style="margin: 0;">
+  &lt;path
+      android:pathData="M0,160L60,170.7C120,181,240...Z"
+      android:fillColor="@color/ifam_green_dark"/&gt;
+&lt;/vector&gt;
+</pre>
+        </div>
+        <div class="explanation">
+          <p>Se você abrir o <code>wave.xml</code> verá um bloco de letras e números bizarros. Isto é a linguagem
+            universal de Geometria de Vetores (Path Data):</p>
+          <div class="line-explanation"><strong>M (Move To):</strong> <code>M0,240</code> significa "Levante a caneta e
+            coloque-a na coordenada X=0 e Y=240 daquela nossa lousa mental (Começando o lado esquerdo mais baixo/curto)".</div>
+          <div class="line-explanation"><strong>L (Line To):</strong> <code>L1440,80</code> significa "Faça um risco
+            perfeitamente reto em diagonal até o lado direito na altura 80 (Deixando o lado direito mais alto/comprido)".</div>
+          <div class="line-explanation"><strong>L (Line To):</strong> Os próximos passos (<code>L1440,320</code> e <code>L0,320</code>) desenham as linhas retas até a base do retângulo da tela. Graças a isso, não precisamos de um arquivo de imagem pesado para termos um enfeite poligonal no rodapé!</div>
+          <div class="line-explanation"><strong>Z e fillColor:</strong> O "Z" fecha o polígono conectando o último ponto ao primeiro. Após a caneta terminar, o celular "derrama" (fill) a cor definida dentro das linhas fechadas.</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-13" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 13/58</div>
+        <h2 class="title"><i class="fas fa-image"></i> O Desafio do Bitmap (logo.png)</h2>
+        <div class="explanation">
+          <p>O nosso arquivo <code>logo.png</code> também reside na pasta <code>drawable</code>. Apesar do que falamos
+            no Slide 6, desenhar um logotipo complexo usando pura matemática de vetores (Path Data) às vezes é difícil
+            demais ou consome muito processamento. Por isso, ainda usamos imagens PNG (Bitmaps) para logotipos
+            fotográficos ou muito complexos.</p>
+          <h4 class="mt-4 text-success">A Armadilha das Densidades (DPI)</h4>
+          <p>Se você colocar um logo pequeno de 100x100 pixels, ele ficará lindo em um celular antigo. Mas se um usuário
+            baixar seu app num moderno Galaxy S24 Ultra (que possui uma tela "Quad-HD" super adensada), os 100 pixels
+            originais vão ser esticados pelo sistema para preencher o espaço físico da tela. O logo ficará completamente
+            embaçado (borrado).</p>
+          <p><strong>A Solução Profissional:</strong> Em projetos reais, nós não temos apenas uma pasta drawable. Nós
+            teríamos pastas como <code>drawable-mdpi</code>, <code>drawable-hdpi</code>, <code>drawable-xhdpi</code>, e
+            colocaríamos tamanhos diferentes do mesmo logo (pequeno, médio, gigante) em cada uma delas. O Android é
+            inteligente o suficiente para descobrir qual a potência da tela do usuário e puxar magicamente a imagem da
+            pasta correta!</p>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-14" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 14/58</div>
+        <h2 class="title"><i class="fas fa-font"></i> A Pasta res/font e o Google Fonts</h2>
+        <div class="code-block">
+          <pre style="margin: 0;">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;font-family xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:fontProviderAuthority="com.google.android.gms.fonts"
+        app:fontProviderPackage="com.google.android.gms"
+        app:fontProviderQuery="Afacad"
+        app:fontProviderCerts="@array/com_google_android_gms_fonts_certs"&gt;
+&lt;/font-family&gt;
+</pre>
+        </div>
+        <div class="explanation">
+          <p>Você reparou que nós criamos uma pasta <code>res/font/</code> e colocamos um XML chamado
+            <code>afacad.xml</code> lá dentro?</p>
+          <p>Antigamente, se você quisesse uma tipografia bonita, precisava baixar um arquivo <code>.ttf</code>
+            (TrueType Font) pesado, de 2MB ou mais, e colocar dentro do aplicativo. Isso deixava o app mais gordo para
+            baixar na Play Store.</p>
+          <div class="line-explanation"><strong>Downloadable Fonts:</strong> Nosso XML é uma técnica moderna. O
+            <code>fontProviderAuthority</code> liga o nosso app aos serviços internos da Google Play do próprio celular.
+          </div>
+          <div class="line-explanation"><strong>A Mágica do Download On-the-fly:</strong> O
+            <code>fontProviderQuery="Afacad"</code> avisa ao celular: "Ei, veja se você já tem a fonte 'Afacad' baixada
+            na memória cache. Se não tiver, baixe ela do Google rapidamente!". Dessa forma, nosso App não engorda o
+            celular do usuário e mantém uma estética lindíssima baseada no catálogo gratuito do Google Fonts!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-15" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 15/58</div>
+        <h2 class="title"><i class="fas fa-download"></i> Como importar a Fonte na Prática</h2>
+        <div class="explanation">
+          <p>A teoria das fontes (Slide 12) é linda, mas como fazemos na prática?</p>
+          <div class="line-explanation"><strong>1. Criando a pasta:</strong> Clique com o botão direito na pasta <code>res</code> -> <strong>New</strong> -> <strong>Android Resource Directory</strong>. No campo "Resource type", selecione <strong>font</strong> e clique em OK.</div>
+          <div class="line-explanation"><strong>2. O Catálogo:</strong> Não perca tempo baixando arquivos manuais! Vá no design de qualquer tela (ex: <code>activity_main.xml</code>), clique em um texto, vá na aba <em>Attributes</em> à direita, ache "fontFamily", clique na setinha e depois em <strong>More Fonts...</strong></div>
+          <div class="line-explanation"><strong>3. A Mágica:</strong> Uma janela oficial do Google Fonts se abrirá dentro do seu Android Studio! Pesquise por "Afacad", selecione "Create downloadable font" e dê OK. A IDE vai criar o arquivo <code>afacad.xml</code> automaticamente para você sem engordar o peso do seu app!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-16" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 16/58</div>
+        <h2 class="title"><i class="fas fa-palette"></i> A Pasta Values: colors.xml</h2>
+        <div class="code-block">
+&lt;resources&gt;
+    &lt;color name="ifam_green"&gt;#008037&lt;/color&gt;
+    &lt;color name="ifam_green_light"&gt;#98c29c&lt;/color&gt;
+    &lt;color name="ifam_green_dark"&gt;#004D21&lt;/color&gt;
+&lt;/resources&gt;
+        </div>
+        <div class="explanation">
+          <p>A pasta <code>res/values/</code> guarda a alma e as variáveis essenciais do design do aplicativo. O arquivo <code>colors.xml</code> é o cofre central das tintas.</p>
+          <div class="line-explanation"><strong>Centralização de Cores:</strong> Jamais digite "<code>#008037</code>" diretamente no fundo de uma tela ou botão no layout. Nós criamos um nome lógico como <code>name="ifam_green"</code>. A partir desse momento, no seu front-end, você só chama <code>@color/ifam_green</code>.</div>
+          <div class="line-explanation"><strong>O Poder da Escala de Arquitetura:</strong> Se a diretoria decidir amanhã que o verde institucional mudou para azul escuro, você não precisa abrir 50 telas do aplicativo para alterar a cor fundo por fundo. Você abre APENAS este arquivo <code>colors.xml</code>, troca o código Hexadecimal uma única vez, e as 50 telas do aplicativo inteiro se transformam na mesma hora!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-17" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 17/58</div>
+        <h2 class="title"><i class="fas fa-language"></i> A Pasta Values: strings.xml</h2>
+        <div class="code-block">
+&lt;resources&gt;
+    &lt;string name="app_name"&gt;Calculadora de IMC&lt;/string&gt;
+    &lt;string name="hint_weight"&gt;Digite seu peso...&lt;/string&gt;
+    &lt;string name="button_calculate"&gt;Calcular&lt;/string&gt;
+&lt;/resources&gt;
+        </div>
+        <div class="explanation">
+          <p>Da mesma forma que as cores, escrever frases cruas (hardcoded) direto no código visual é um terrível erro de arquitetura. O arquivo <code>strings.xml</code> atua como o Dicionário Central do aplicativo.</p>
+          <div class="line-explanation"><strong>O Referenciamento:</strong> Quando damos nomes como <code>name="hint_weight"</code> para a frase "Digite seu peso", a interface visual passa a consultar este dicionário cego em vez de ter a frase tatuada nela mesma. E a mágica de verdade acontece na internacionalização (i18n)!</div>
+          <div class="line-explanation"><strong>Tradução Automática de Idiomas:</strong> Você pode clicar com o direito em <code>strings.xml</code> -> Open Translations Editor. Crie uma coluna para o idioma "Inglês (en)" e traduza para "Enter your weight". O Android Studio criará uma segunda pasta values invisível. Quando um turista americano abrir o App no celular dele, o Android detectará o idioma da placa-mãe, ignorará o português, e injetará as frases em inglês nativamente na tela sem que você programe uma única linha de Kotlin para isso!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-18" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 18/58</div>
+        <h2 class="title"><i class="fas fa-object-group"></i> O que é o ConstraintLayout?</h2>
+        <div class="explanation">
+          <p>Antes de olharmos o código da tela, precisamos entender a "Prancheta" onde estamos desenhando: o famigerado
+            <strong>ConstraintLayout</strong>.</p>
+          <div class="line-explanation"><strong>A Evolução:</strong> Antigamente, criar telas no Android exigia empilhar
+            caixas dentro de caixas (Linear Layouts). Se você quisesse um botão do lado de um texto, precisava criar uma
+            caixa invisível só para segurá-los. Isso deixava o celular lento para processar tantas caixas aninhadas.
+          </div>
+          <div class="line-explanation"><strong>O Quadro Magnético:</strong> O ConstraintLayout é completamente "plano"
+            (Flat). Você joga todos os botões e textos soltos na tela e os amarra usando regras magnéticas bidirecionais
+            (elásticos visuais). Exemplo: "Prenda a base do botão X no teto do botão Y".</div>
+          <div class="line-explanation"><strong>A Vantagem Extrema:</strong> Se a tela for de um relógio apertado ou de
+            uma TV esticada, as amarras (constraints) encolhem ou expandem de forma perfeitamente simétrica, mantendo o
+            seu design responsivo sem precisar que você programe resoluções diferentes!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-19" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 19/58</div>
+        <h2 class="title"><i class="fas fa-code"></i> activity_main.xml: O Cabeçalho (Namespaces)</h2>
+        <div class="code-block">
+          &lt;androidx.constraintlayout.widget.ConstraintLayout
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:app="http://schemas.android.com/apk/res-auto"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:id="@+id/main"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@drawable/background" ...&gt;
+        </div>
+        <div class="explanation">
+          <p>A raiz do nosso arquivo de interface (Front-end) começa assim. Analisando linha a linha:</p>
+          <div class="line-explanation"><strong>&lt;androidx.constraintlayout...&gt;</strong>: Abre a prancheta de
+            desenho principal. Absolutamente tudo o que nós desenharmos na tela ficará contido dentro desta tag gigante.
+          </div>
+          <div class="line-explanation"><strong>xmlns:android="..." e xmlns:app="..."</strong>: São os XML NameSpaces
+            (Dicionários). O Android Studio não sabe tudo sozinho. Se você não importar esses dicionários na raiz, ele
+            não vai entender quando você escrever comandos básicos como <code>android:textColor</code> ou
+            <code>app:layout...</code>.</div>
+          <div class="line-explanation"><strong>layout_width/height="match_parent"</strong>: Diz para a nossa prancheta
+            preencher 100% da largura e da altura da tela física do celular.</div>
+          <div class="line-explanation"><strong>android:background="@drawable/background"</strong>: Lembra do fundo
+            verde inclinado que fizemos no Slide 8? Aqui nós o chamamos! Ele agora atua como a parede de fundo do nosso
+            aplicativo.</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-20" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 20/58</div>
+        <h2 class="title"><i class="fas fa-id-card"></i> ImageView do Logo: Tamanhos Fixos</h2>
+        <div class="code-block">
+          &lt;ImageView
+          android:id="@+id/image_logo"
+          android:layout_width="180dp"
+          android:layout_height="180dp"
+          android:layout_marginTop="32dp"
+          android:src="@drawable/logo"
+        </div>
+        <div class="explanation">
+          <p>Vamos dissecar o código do Logo <strong>linha a linha</strong>:</p>
+          <div class="line-explanation"><strong>android:id="@+id/image_logo"</strong>: Cria um CPF único (ID) para esta
+            imagem no sistema. O símbolo <code>@+id/</code> diz ao Android: "Adicione um novo ID à sua memória chamado
+            image_logo".</div>
+          <div class="line-explanation"><strong>android:layout_width="180dp"</strong> e <strong>height="180dp"</strong>:
+            Define a largura e altura da imagem. A sigla <strong>DP</strong> (Density-independent Pixel) é fundamental.
+            Ela garante que a imagem de 180dp tenha sempre a mesma medida visual em centímetros no mundo real,
+            independentemente se a tela do celular é fraca ou se é uma super tela de altíssima resolução.</div>
+          <div class="line-explanation"><strong>android:layout_marginTop="32dp"</strong>: Cria um espaçamento invisível
+            (Margem) no topo da imagem, empurrando-a 32dp para baixo para "desgrudar" do teto da tela.</div>
+          <div class="line-explanation"><strong>android:src="@drawable/logo"</strong>: Source (Fonte). Vai na pasta
+            <code>drawable</code> e puxa o arquivo visual <code>logo.png</code> para exibi-lo na tela.</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-21" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 21/58</div>
+        <h2 class="title"><i class="fas fa-anchor"></i> ImageView: Amarrações de Constraint</h2>
+        <div class="code-block">
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toTopOf="parent" /&gt;
+        </div>
+        <div class="explanation">
+          <p>Se você jogar a imagem no arquivo XML sem amarras, ela vai grudar eternamente no canto esquerdo superior
+            (Coordenadas X=0, Y=0). Veja a mágica dos Elásticos (Constraints) linha a linha:</p>
+          <div class="line-explanation"><strong>app:layout_constraintLeft_toLeftOf="parent"</strong>: "Prenda a ESQUERDA
+            deste logo na ESQUERDA do Pai (A borda esquerda da tela inteira)".</div>
+          <div class="line-explanation"><strong>app:layout_constraintRight_toRightOf="parent"</strong>: "Prenda a
+            DIREITA deste logo na DIREITA do Pai".<br><br><strong>O Efeito Automático:</strong> Como o logotipo está
+            amarrado dos dois lados do celular (como cabos de guerra), o Android o <strong>centraliza perfeitamente na
+              horizontal!</strong> Sem precisarmos fazer divisão de tela.</div>
+          <div class="line-explanation"><strong>app:layout_constraintTop_toTopOf="parent"</strong>: "Prenda o TOPO do
+            logo no TOPO da tela". Mantém o logo ancorado para cima.</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-22" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 22/58</div>
+        <h2 class="title"><i class="fas fa-heading"></i> TextView (Título) e os SPs</h2>
+        <div class="code-block">
+          &lt;TextView
+          android:id="@+id/text_title"
+          android:fontFamily="@font/afacad"
+          android:text="@string/app_name"
+          android:textColor="@color/white"
+          android:textSize="48sp"
+          app:layout_constraintTop_toBottomOf="@id/image_logo" /&gt;
+        </div>
+        <div class="explanation">
+          <p>Este é o componente visual responsável por mostrar o título principal "Calculadora de IMC". Vamos
+            destrinchar:</p>
+          <div class="line-explanation"><strong>android:fontFamily="@font/afacad"</strong>: Aplica aquela fonte elegante
+            baixada diretamente do servidor do Google Fonts que configuramos no Slide 12.</div>
+          <div class="line-explanation"><strong>android:text="@string/app_name"</strong>: Nós não escrevemos a palavra
+            crua aqui! Nós puxamos da pasta central de traduções (<code>values/strings.xml</code>). Se você traduzir a
+            palavra para o inglês lá, o app inteiro muda automaticamente sem precisarmos tocar na interface visual.
+          </div>
+          <div class="line-explanation"><strong>android:textSize="48sp"</strong>: Aqui reside a genialidade da
+            <strong>Acessibilidade</strong>! NUNCA usamos "dp" para tamanho de textos, e sim <strong>SP</strong>
+            (Scale-independent Pixels). Por quê? Se um usuário idoso for nas configurações do celular e ativar letras
+            gigantes, a medida <code>sp</code> obedece a configuração biométrica e cresce junto. Se você usasse
+            <code>dp</code>, o tamanho do título travaria e prejudicaria a visão do usuário!</div>
+          <div class="line-explanation"><strong>app:layout_constraintTop_toBottomOf="@id/image_logo"</strong>: A amarra
+            magnética vertical. Nós mandamos o TOPO (Top) deste texto se amarrar rigidamente na BASE (Bottom) do
+            logotipo que está acima dele. O texto ficará flutuando em perfeita harmonia abaixo da imagem.</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-23" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 23/58</div>
+        <h2 class="title"><i class="fas fa-text-width"></i> EditText do Peso (Por que 0dp?)</h2>
+        <div class="code-block">
+          &lt;EditText
+          android:id="@+id/edittext_weight"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="16dp"
+          android:layout_marginRight="16dp"
+        </div>
+        <div class="explanation">
+          <p>A caixa de entrada (EditText) onde o usuário digita o peso guarda um dos maiores e mais importantes truques
+            de responsividade mobile que existem:</p>
+          <div class="line-explanation"><strong>android:layout_width="0dp"</strong>: Em um ConstraintLayout, o valor 0dp
+            não significa que o elemento terá tamanho zero e vai desaparecer. Pelo contrário! Ele é o código mestre
+            chamado <strong>Match Constraint</strong>. O número zero diz ao celular: "Abra mão do seu tamanho fixo,
+            libere suas amarras e estique o seu corpo horizontalmente até bater nas paredes marginais da tela".</div>
+          <div class="line-explanation"><strong>layout_marginLeft="16dp" e Right="16dp"</strong>: O toque final. Nós
+            colamos as amarras nas laterais direita e esquerda da tela, mas aplicamos 16dp de margem (distância de
+            respiro). Como a largura é mágica (0dp), o campo de texto vai esticar perfeitamente ocupando toda a tela,
+            mas vai frear exatos 16dp antes de encostar no vidro do celular. Dessa forma, o campo se adapta lindamente
+            sem importar se a tela é fina ou muito larga!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-24" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 24/58</div>
+        <h2 class="title"><i class="fas fa-magic"></i> EditText: O poder do Hint</h2>
+        <div class="code-block">
+          android:hint="@string/hint_weight"
+          android:textColor="@color/white"
+          android:textColorHint="@color/white"
+          android:textSize="20sp" ... /&gt;
+        </div>
+        <div class="explanation">
+          <p>Continuando a análise do campo de Peso, nós configuramos o texto guia e a estética visual da digitação:</p>
+          <div class="line-explanation"><strong>android:hint="@string/hint_weight"</strong>: O "Hint" é o famoso texto
+            fantasma ("Digite seu peso..."). Ele orienta o usuário sobre o que digitar. A usabilidade genial do hint é
+            que, no exato milissegundo em que o usuário digita o primeiro número real, o fantasma evapora sozinho!
+            Novamente, puxamos o texto da pasta <code>@string</code> para permitir fáceis traduções futuras.</div>
+          <div class="line-explanation"><strong>android:textColor="@color/white"</strong>: Define que o número real que
+            o usuário digitar será pintado de branco puro, garantindo um alto contraste de leitura contra o fundo verde
+            esmeralda.</div>
+          <div class="line-explanation"><strong>android:textColorHint="..."</strong>: Define a cor do texto fantasma.
+            Nós também forçamos o branco, mas o Android nativamente injetará uma fina camada de transparência no Hint
+            para diferenciá-lo do texto real digitado.</div>
+          <div class="line-explanation"><strong>android:textSize="20sp"</strong>: Usa o acessível SP (Scale-independent
+            Pixels) para garantir que a letra digitada seja corpulenta e muito fácil de ler.</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-25" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 25/58</div>
+        <h2 class="title"><i class="fas fa-tag"></i> Label da Altura (TextView)</h2>
+        <div class="code-block">
+          &lt;TextView
+          android:id="@+id/text_label_height"
+          android:text="@string/label_height"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/edittext_weight" /&gt;
+        </div>
+        <div class="explanation">
+          <p>Este é o rótulo ("Qual a sua altura?") que fica no meio da tela anunciando a barra de rolagem.</p>
+          <div class="line-explanation"><strong>A Semântica Correta:</strong> Por que usamos a tag <code>TextView</code>
+            aqui em vez de <code>EditText</code>? Porque TextView é de "Somente Leitura". Ele não é clicável. Se você
+            colocasse um EditText por engano, o usuário poderia clicar no rótulo e o teclado virtual saltaria na tela
+            bloqueando a visão sem necessidade, o que é terrível para a usabilidade (UX).</div>
+          <div class="line-explanation"><strong>app:layout_constraintTop_toBottomOf="@id/edittext_weight"</strong>: A
+            amarra vertical clássica. Nós ancoramos o TOPO desta frase na BASE do campo de Peso logo acima. É assim que
+            construímos a tela verticalmente, empilhando um bloco debaixo do outro de forma responsiva.</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-26" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 26/58</div>
+        <h2 class="title"><i class="fas fa-sliders-h"></i> A Barra Dinâmica: SeekBar</h2>
+        <div class="code-block">
+          &lt;SeekBar
+          android:id="@+id/seek_height"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_margin="16dp"
+        </div>
+        <div class="explanation">
+          <p>Para o campo de Altura, nós abandonamos a digitação tradicional e decidimos usar um componente moderno e
+            dinâmico: o <strong>SeekBar</strong>.</p>
+          <div class="line-explanation"><strong>O Motivo de UX (Experiência do Usuário):</strong> Obrigar o usuário a
+            puxar o teclado numérico de novo e digitar "170" ou "1.70" frequentemente gera erros bobos (ex: usar vírgula
+            em vez de ponto, o que dá Crash na matemática). O cérebro humano lida de forma extremamente eficiente com
+            estimativas espaciais visuais. Puxar uma barra deslizante é absurdamente mais rápido, lúdico e à prova de
+            erros de sintaxe!</div>
+          <div class="line-explanation"><strong>android:layout_width="0dp"</strong>: Mais uma vez invocamos a Constraint
+            Mágica (0dp). A barra de rolagem vai esticar toda a sua extensão na largura do celular até esbarrar nas
+            margens laterais de 16dp que configuramos na linha de baixo.</div>
+          <div class="line-explanation"><strong>android:layout_height="wrap_content"</strong>: Na altura nós usamos uma
+            tática diferente. Nós não esticamos. O <code>wrap_content</code> garante que o botão trilho da barra adote
+            automaticamente a espessura ideal calculada pelos engenheiros do Google para que a ponta do polegar do
+            usuário consiga encostar sem errar o alvo (o chamado "Touch Target").</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-27" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 27/58</div>
+        <h2 class="title"><i class="fas fa-ruler-vertical"></i> SeekBar: Limites Min e Max</h2>
+        <div class="code-block">
+          android:max="250"
+          android:min="0"
+          android:progressBackgroundTint="@color/white"
+          android:progressTint="@color/white" ... /&gt;
+        </div>
+        <div class="explanation">
+          <p>A barra deslizante não sabe qual a escala humana sozinha. Nós precisamos ditar as regras mecânicas e
+            visuais do trilho:</p>
+          <div class="line-explanation"><strong>android:min="0" e android:max="250"</strong>: O limite mecânico extremo.
+            A barra nasce valendo matematicamente 0 na ponta esquerda, e morre valendo 250 na ponta direita. Por que
+            250? Pois nós decidimos medir a altura do paciente em <strong>centímetros puros</strong>. (Considerando que
+            o homem mais alto registrado na medicina bateu 272cm, uma barra de 250 atende 99.99% dos usuários!).</div>
+          <div class="line-explanation"><strong>android:progressTint="@color/white"</strong>: Pinta o "rastro" vivo do
+            progresso (a parte do trilho que já foi percorrida pela bolinha da esquerda para a direita) na cor branca
+            opaca.</div>
+          <div class="line-explanation"><strong>android:progressBackgroundTint="..."</strong>: Pinta o "trilho morto" ou
+            fantasma (a parte vazia à direita que o usuário ainda não alcançou) também de branco, finalizando a
+            integração perfeita da barra com nossa paleta verde esmeralda institucional.</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-28" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 28/58</div>
+        <h2 class="title"><i class="fas fa-eye-slash"></i> Label Dinâmico: O Segredo do "Gone"</h2>
+        <div class="code-block">
+          &lt;TextView
+          android:id="@+id/text_height_value"
+          android:text="@string/label_0_cm"
+          android:visibility="gone" ... /&gt;
+        </div>
+        <div class="explanation">
+          <p>Este TextView foi alocado logo abaixo do SeekBar com a missão exclusiva de mostrar em formato de texto vivo
+            o número que o usuário está selecionando na barra (ex: "170 cm"). Mas ele possui um atributo fantástico de
+            comportamento:</p>
+          <div class="line-explanation"><strong>android:visibility="gone"</strong>: A Visibilidade Extinta! Atenção:
+            Isto é muito diferente da visibilidade <code>invisible</code>. Se você manda um elemento ficar "invisível",
+            o Android o deixa 100% transparente, mas <em>ele continua ocupando o seu quadrado físico na tela</em>. O
+            comando radical <strong>Gone</strong> ("Se Foi"), além de invisível, manda o celular ESMAGAR o campo até ele
+            deixar de existir no plano físico da tela, fechando o buraco e puxando os botões de baixo para cima.</div>
+          <div class="line-explanation"><strong>A Genialidade Oculta:</strong> Ou seja, quando o app abre, este texto
+            nasce morto e a tela fica limpa. Mas lá na frente, quando pularmos para o código Kotlin, nós ensinaremos a
+            inteligência artificial a agir: "No exato instante em que o usuário tocar na barra com o dedo, altere o
+            valor deste texto de <em>Gone</em> para <em>Visible</em>". E Puf! O texto brotará das trevas no meio da tela
+            como mágica!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-29" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 29/58</div>
+        <h2 class="title"><i class="fas fa-clipboard-check"></i> Resultado IMC (A Resposta)</h2>
+        <div class="code-block">
+          &lt;TextView
+          android:id="@+id/text_result"
+          android:fontFamily="@font/afacad"
+          android:textSize="28sp"
+          android:visibility="gone"
+          app:layout_constraintBottom_toTopOf="@id/button_calculate" .../&gt;
+        </div>
+        <div class="explanation">
+          <p>Este é o coração do aplicativo: o texto que revelará a nota cirúrgica do Índice de Massa Corporal (ex: "Seu
+            IMC é 22.5"). Assim como o componente do slide anterior, ele nasce com <code>visibility="gone"</code>,
+            hibernando até o usuário clicar no grande botão de cálculo.</p>
+          <div class="line-explanation"><strong>android:textSize="28sp"</strong>: O resultado é a super-estrela do nosso
+            sistema. Por isso, definimos uma fonte monstruosa de 28sp (dinâmica para acessibilidade) para que o número
+            salte da tela aos olhos do paciente com autoridade.</div>
+          <div class="line-explanation"><strong>app:layout_constraintBottom_toTopOf="@id/button_calculate"</strong>: Um
+            posicionamento puramente estratégico! Nós mandamos a BASE (Bottom) deste texto colar magneticamente e
+            rigidamente no TOPO (Top) da dupla de botões "Calcular e Limpar" que estão presos no rodapé. Isso garante
+            que, não importa se o celular rodando o app é um aparelho pequeno e achatado antigo ou um tablet gigantesco
+            de proporção 21:9 de cinema, o resultado numérico gigante flutuará eternamente e em perfeita harmonia na
+            área de visualização central livre em cima dos polegares do usuário!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-30" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 30/58</div>
+        <h2 class="title"><i class="fas fa-eraser"></i> Botão Limpar</h2>
+        <div class="code-block">
+          &lt;Button
+          android:id="@+id/button_clear"
+          android:layout_width="wrap_content"
+          android:paddingLeft="48dp"
+          android:text="@string/button_clear"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toLeftOf="@id/button_calculate" /&gt;
+        </div>
+        <div class="explanation">
+          <p>Explicando o botão linha a linha:</p>
+          <div class="line-explanation"><strong>layout_width="wrap_content"</strong>: O botão envolverá (wrap) apenas o
+            tamanho do seu texto, sem esticar para a tela toda.</div>
+          <div class="line-explanation"><strong>paddingLeft="48dp"</strong>: <em>Padding</em> é "Gordura Interna". Ele
+            empurra as bordas do botão 48dp de distância da palavra (texto) lá dentro, deixando o botão largo, bonito e
+            "gordinho".</div>
+          <div class="line-explanation"><strong>A 1ª metade da Corrente:</strong> Olhe bem as amarras finais. Nós o
+            colamos no chão (bottom_toBottomOf) e colamos na beirada esquerda da tela (Left_toLeftOf="parent"). Mas a
+            DIREITA dele (Right) colamos na ESQUERDA do seu botão vizinho, o "button_calculate" (Right_toLeftOf).</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-31" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 31/58</div>
+        <h2 class="title"><i class="fas fa-calculator"></i> Botão Calcular</h2>
+        <div class="code-block">
+          &lt;Button
+          android:id="@+id/button_calculate"
+          android:text="@string/button_calculate"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintLeft_toRightOf="@id/button_clear"
+          app:layout_constraintRight_toRightOf="parent" /&gt;
+        </div>
+        <div class="explanation">
+          <p>O segredo de como os dois botões ficam lado a lado com distância automática está no conceito de
+            <strong>"Horizontal Chain" (Corrente Horizontal)</strong>.</p>
+          <div class="line-explanation"><strong>A 2ª Metade da Corrente:</strong> No slide anterior, a Direita do
+            "Limpar" abraçava a Esquerda do "Calcular". Agora, o botão "Calcular" pega a sua Esquerda (Left_toRightOf) e
+            abraça a Direita do "Limpar"!</div>
+          <div class="line-explanation"><strong>A Mágica da Distância:</strong> O sistema detecta que os dois botões
+            estão se abraçando (amarra bidirecional). O botão Limpar está ancorado na borda esquerda e o botão Calcular
+            está ancorado na borda direita do celular. Como eles estão "de mãos dadas" no meio, o
+            <code>ConstraintLayout</code> divide todo o espaço vazio restante da tela <strong>igualmente</strong>! A
+            distância entre eles se ajusta de forma matemática automática, quer a tela do usuário seja larga ou fina,
+            garantindo que nunca fiquem colados ou desalinhados!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-32" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 32/58</div>
+        <h2 class="title"><i class="fas fa-water"></i> View Decorativa (A Onda Renderizada)</h2>
+        <div class="code-block">
+          &lt;View
+          android:layout_width="0dp"
+          android:layout_height="145dp"
+          android:background="@drawable/wave"
+          android:backgroundTint="#2AD57A"
+          app:layout_constraintBottom_toBottomOf="parent" .../&gt;
+        </div>
+        <div class="explanation">
+          <p>Para o toque de mestre no design da tela, nós não colocamos a "Onda" como fundo do aplicativo inteiro. Nós
+            usamos uma tag <code>&lt;View&gt;</code> genérica para ancorar o desenho exclusivamente no rodapé!</p>
+          <div class="line-explanation"><strong>O que é uma View?</strong> É a unidade mais primitiva do Android. É
+            literalmente um quadrado ou retângulo vazio. Ele não tem texto, não clica, não faz nada nativamente. Nós
+            usamos <code>Views</code> para construir blocos, traçar linhas divisórias ou, neste caso, injetar uma arte
+            customizada no fundo de uma região específica da tela.</div>
+          <div class="line-explanation"><strong>android:layout_height="145dp"</strong>: Como a nossa onda tem cristas e
+            vales definidos matematicamente, nós travamos a altura do quadrado invisível em exatos 145dp. Essa é a
+            proporção ideal para mostrar a ondulação sem cobrir ou engolir os botões. A largura, claro, é "0dp" para o
+            quadrado esticar perfeitamente de uma borda à outra do celular.</div>
+          <div class="line-explanation"><strong>android:background="@drawable/wave" e backgroundTint</strong>: Aqui está
+            a mágica! Nós abrimos o quadrado vazio e "injetamos" a matemática vetorial "wave" (aquela que estudamos no
+            Slide 9) dentro dele. E, como a onda original não tinha cor definida, usamos o atributo <em>Tint</em>
+            (Tinta) para forçar o preenchimento verde-menta (<code>#2AD57A</code>), criando uma estampa lindíssima que
+            decora o rodapé por trás dos nossos botões!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-33" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 33/58</div>
+        <h2 class="title"><i class="fas fa-check-double"></i> Interface Pronta!</h2>
+        <div class="explanation">
+          <p>Vitória Escarpada! Nós terminamos de destrinchar, quebrar e analisar absolutamente todas as tags, elásticos
+            magnéticos e engrenagens da "casca" visual do nosso aplicativo.</p>
+          <div class="line-explanation"><strong>O Estado Atual do App:</strong> Se você conectar o cabo USB no seu
+            celular e rodar o projeto agora, você verá uma tela verde esmeralda lindíssima brotar na sua mão. O teclado
+            numérico subirá macio quando você tocar no peso, a barra do SeekBar deslizará fluidamente pelo trilho sob o
+            seu dedo, e o layout se provará inquebrável, não importando se você virar o celular de lado (Landscape) ou
+            mantê-lo em pé (Portrait). É uma experiência visual completa e fluida.</div>
+          <div class="line-explanation"><strong>O Diagnóstico de Morte Cerebral:</strong> Apesar de majestoso, o
+            aplicativo está clinicamente em morte cerebral. Lembra da analogia do Front-end vs Back-end no Slide 3? Se
+            você arrastar a barra, o texto não atualiza. Se você clicar ferozmente em "Calcular", absolutamente nada
+            acontece. A tela não possui cérebro lógico para fazer contas de divisão do IMC ou despertar o grande
+            resultado que está escondido pelo estado <em>Gone</em>.</div>
+          <h4 class="mt-4 text-success">Prepare as Luvas Cirúrgicas!</h4>
+          <p>Fechamos a pasta <em>Res</em>. No próximo módulo maciço, nós abriremos os portões da pasta <em>Java</em> e
+            entraremos no arquivo <strong>Kotlin</strong>. Vamos injetar inteligência, ouvir eventos biônicos, dominar a
+            matemática e construir o Cérebro Inquebrável da nossa Calculadora de IMC. Siga em frente!</p>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-34" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 34/58</div>
+        <h2 class="title"><i class="fas fa-brain"></i> O Cérebro: O que é Kotlin?</h2>
+        <div class="explanation">
+          <p>O <strong>Kotlin</strong> é a linguagem de programação moderna desenvolvida pela JetBrains e adotada
+            oficialmente pelo Google em 2017 como a linguagem primária do mundo Android, substituindo o lendário Java.
+          </p>
+          <div class="line-explanation"><strong>Por que Kotlin?</strong> O antigo Java exigia uma escrita repetitiva e
+            assustadora para quem estava aprendendo (o famoso <em>Boilerplate</em>). O Kotlin é estupidamente mais
+            enxuto, direto e resolve nativamente um dos maiores problemas da história da programação: o erro de tela
+            azul por variável nula (o terrível NullPointerException), também conhecido na engenharia como "O Erro de Um
+            Bilhão de Dólares".</div>
+          <div class="line-explanation"><strong>A Missão do Kotlin:</strong> Enquanto o XML desenhou nosso aplicativo
+            visualmente (Front-end), o arquivo Kotlin é o "Titereiro" (Back-end). Ele tem o poder onipotente de escutar
+            quando o usuário toca num botão, processar fórmulas matemáticas e alterar os textos dinâmicos da tela em
+            tempo real.</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-35" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 35/58</div>
+        <h2 class="title"><i class="fas fa-box-open"></i> O Arquivo .kt: O Package</h2>
+        <div class="code-block">
+          package br.com.roboticminds.calculadoradeimc_ifam
+        </div>
+        <div class="explanation">
+          <p>Se você abrir o arquivo <code>MainActivity.kt</code>, a primeiríssima linha do código que você verá é a
+            declaração de pacote (Package):</p>
+          <div class="line-explanation"><strong>package br.com.roboticminds...</strong>: Esta é a Placa de Identidade do
+            seu código, baseada na arquitetura de Domínio Reverso. Imagine que existam milhões de aplicativos na Google
+            Play, e centenas deles também possuem um arquivo genérico chamado "MainActivity" (ex: Facebook, TikTok,
+            WhatsApp). O que impede a RAM do celular de confundir a sua <em>MainActivity</em> com a do aplicativo do
+            banco? A assinatura unificada exclusiva que esta linha 1 cria!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-36" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 36/58</div>
+        <h2 class="title"><i class="fas fa-truck-loading"></i> Os Imports: O Arsenal</h2>
+        <div class="code-block">
+          import android.os.Bundle
+          import android.view.View
+          import android.widget.Button
+          import android.widget.EditText
+          // ... (mais imports)
+        </div>
+        <div class="explanation">
+          <p>Logo abaixo do pacote, temos uma torre de linhas verdes que começam com a palavra-chave
+            <strong>import</strong>.</p>
+          <div class="line-explanation"><strong>O Conceito de Importação:</strong> O Kotlin, quando nasce, é virgem e
+            ignorante. Ele domina somas matemáticas, mas não faz a menor ideia do que seja um botão visual de Android ou
+            um campo de digitar peso. Nós usamos o <code>import</code> para acionar as imensas bibliotecas nativas do
+            Google (SDK) e "sugar" os manuais de instrução dessas peças gráficas para dentro do nosso arquivo.</div>
+          <div class="line-explanation"><strong>A Mágica do Android Studio:</strong> O melhor de tudo? Você nunca
+            precisará decorar ou digitar esses longos caminhos de <em>import</em> manualmente. Quando você invocar a
+            palavra "Button" ali em baixo, a inteligência da IDE detecta que você precisa dele e escreve silenciosamente
+            a linha de <code>import android.widget.Button</code> no topo do arquivo por você!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-37" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 37/58</div>
+        <h2 class="title"><i class="fas fa-dna"></i> A Classe e a Herança</h2>
+        <div class="code-block">
+          class MainActivity : AppCompatActivity() {
+        </div>
+        <div class="explanation">
+          <p>A declaração oficial do coração da nossa tela começa aqui:</p>
+          <div class="line-explanation"><strong>class MainActivity</strong>: No mundo da programação moderna (Orientada
+            a Objetos), as coisas são tratadas como "Moldes" ou "Fôrmas". Ao dizer <em>class</em>, estamos fabricando um
+            molde digital poderoso e batizando-o de MainActivity.</div>
+          <div class="line-explanation"><strong>O símbolo " : " Herança Biológica</strong>: No Kotlin, esse simples
+            sinal de dois-pontos é o comando genético supremo. Ele significa: "Transfira toda a genética e os poderes da
+            entidade X para nós".</div>
+          <div class="line-explanation"><strong>AppCompatActivity()</strong>: Esta é uma Super Classe titânica mantida
+            em silêncio pelos engenheiros do Android. Nós estamos dizendo que a nossa humilde MainActivity deve herdar
+            100% dos poderes dessa super classe. Ao fazermos isso, herdamos milhares de linhas de código prontas que
+            garantem, por exemplo, que a nossa tela saiba desenhar barras de navegação ou reagir suavemente quando o
+            usuário aperta os botões físicos de volume do celular!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-38" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 38/58</div>
+        <h2 class="title"><i class="fas fa-baby"></i> onCreate (A Certidão de Nascimento)</h2>
+        <div class="code-block">
+          override fun onCreate(savedInstanceState: Bundle?) {
+          super.onCreate(savedInstanceState)
+        </div>
+        <div class="explanation">
+          <p>No Android, as Telas (Activities) são organismos vivos; elas têm um ciclo biológico de nascimento, pausa e
+            destruição (Lifecycle). O <strong>onCreate</strong> (Ao Nascer) é a centelha da vida.</p>
+          <div class="line-explanation"><strong>override fun onCreate(...)</strong>: <code>override</code>
+            ("sobrescrever"). Nós pegamos o botão de "ligar tela" genérico do Google e embutimos os nossos próprios
+            comandos nele. Este evento é acionado na fração de segundo exata em que o usuário bate o dedo no ícone do
+            App na área de trabalho do celular.</div>
+          <div class="line-explanation"><strong>savedInstanceState: Bundle?</strong>: Isso atua como um "Módulo
+            Crio-genético de Sobrevivência". Quando você vira um Android de lado (modo deitado), ele não vira a tela.
+            Ele literalmente assassina a tela atual e a recria em versão deitada em milissegundos. Esse pacote (Bundle)
+            salva os números que o usuário tinha digitado antes da tela morrer, impedindo que os campos resetem
+            assustadoramente do nada.</div>
+          <div class="line-explanation"><strong>super.onCreate(...)</strong>: Uma regra de ferro. Antes de colocarmos
+            qualquer invencionice visual na tela, precisamos invocar o pai supremo (<em>super</em>) para que o
+            processador e as engrenagens gráficas primárias liguem os motores com segurança em segundo plano.</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-39" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 39/58</div>
+        <h2 class="title"><i class="fas fa-expand-arrows-alt"></i> Expansão: Edge-to-Edge</h2>
+        <div class="code-block">
+          enableEdgeToEdge()
+        </div>
+        <div class="explanation">
+          <p>Dentro do abençoado <code>onCreate</code>, a primeira grande mudança visual de nossa autoria no aplicativo
+            é este comando moderno e implacável:</p>
+          <div class="line-explanation"><strong>enableEdgeToEdge()</strong>: Uma função gráfica de luxo introduzida nos
+            aparelhos mais modernos do Android 14 em diante. Se nós não escrevêssemos essa linha, o sistema preencheria
+            a barra de notificações (a faixa estreita lá no topo onde fica o relógio e a rede) e a barra de controles
+            físicos virtuais no rodapé com blocos maciços cinzas antigos, esmagando a nossa linda interface centralizada
+            e tirando totalmente a aura de aplicativo premium.</div>
+          <div class="line-explanation"><strong>A Imersão Espacial Absoluta:</strong> Ao ligarmos essa função, nós
+            forçamos o sistema Android a assassinar todas essas faixas cinzas e tornar as letras do relógio flutuantes.
+            Como consequência, as cores vivas, os botões e a fantástica "Onda de Água" verde do nosso App vão expandir
+            impiedosamente, engolindo e banhando 100% do vidro milimétrico do smartphone físico de ponta a ponta (Da
+            Borda à Borda). Imersão pura.</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-40" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 40/58</div>
+        <h2 class="title"><i class="fas fa-plug"></i> O Casamento: setContentView</h2>
+        <div class="code-block">
+          setContentView(R.layout.activity_main)
+        </div>
+        <div class="explanation">
+          <p>Esta é, possivelmente, a linha estrutural mais importante da fundação da sua tela. É ela quem realiza o
+            casamento irrevogável entre o Cérebro (Kotlin) e o Corpo (XML).</p>
+          <div class="line-explanation"><strong>setContentView(...)</strong>: Comando literal "Definir a Visualização de
+            Conteúdo". A Activity (Tela) nasce na memória completamente nua, cega e abstrata. Esse comando pega tudo que
+            nós desenhamos e digitamos no arquivo XML e joga de uma vez só em cima dela.</div>
+          <div class="line-explanation"><strong>R.layout.activity_main</strong>: A letra maiúscula <strong>R</strong> é
+            o mapa do tesouro interno do Android (a classe <em>Resources</em>). Nós ordenamos ao sistema operacional:
+            "Vá na sua sacola de Recursos Globais (R), abra a gaveta de Layouts Visuais, pegue o projeto
+            <code>activity_main.xml</code> e infle ele fisicamente no vidro da tela do celular". Tudo o que nós
+            programarmos em Kotlin abaixo desta linha agora funcionará, pois o sistema sabe perfeitamente que existe uma
+            interface visual rodando e os botões são reais!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-41" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 41/58</div>
+        <h2 class="title"><i class="fas fa-border-all"></i> Tratamento de Insets</h2>
+        <div class="code-block">
+          ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+          val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+          v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
+          insets
+          }
+        </div>
+        <div class="explanation">
+          <p>O complexo tratamento da "Franja" (Notch) e das Ilhas de Câmera Frontal.</p>
+          <div class="line-explanation"><strong>O Problema do Edge-to-Edge:</strong> Por termos ativado a agressiva
+            expansão extrema de tela no Slide 34, criamos um problema de segurança no design: o logotipo do nosso app
+            pode acabar sendo empurrado lá para o topo físico, ficando perigosamente escondido <em>debaixo</em> do
+            relógio do sistema operacional ou recortado pelo buraco da câmera frontal (Notch) do celular do usuário!
+          </div>
+          <div class="line-explanation"><strong>setOnApplyWindowInsetsListener:</strong> Este monstro de código é o
+            nosso escudo invisível de contenção. Ele implanta um sensor de Insets (Medidas Virtuais do Sistema). A
+            matemática engenhosa que ele faz lá dentro é esta: ele lê, em tempo real, as coordenadas X e Y exatas da
+            câmera e do relógio e aplica uma margem de proteção ("padding.top") empurrando o topo do nosso aplicativo
+            inteirinho milimetricamente para baixo de forma perfeitamente segura, protegendo a usabilidade da nossa
+            calculadora!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-42" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 42/58</div>
+        <h2 class="title"><i class="fas fa-search"></i> Pescando o Peso: findViewById</h2>
+        <div class="code-block">
+          val editTextWeight = findViewById&lt;EditText&gt;(R.id.edittext_weight)
+        </div>
+        <div class="explanation">
+          <p>A tela está linda e segura, mas para fazermos matemática nós precisamos capturar os componentes visuais do
+            corpo físico (XML) e transferi-los espiritualmente para dentro da memória RAM (Kotlin).</p>
+          <div class="line-explanation"><strong>val editTextWeight = ...</strong>: <code>val</code> é o comando primário
+            de criação de Variável de Valor (Value). Ele cria uma gaveta blindada e imutável na memória do celular. Nós
+            batizamos essa gaveta de "editTextWeight" (sem letras maiúsculas no início, seguindo a regra
+            <em>camelCase</em>).</div>
+          <div class="line-explanation"><strong>findViewById&lt;EditText&gt;</strong>: Este é o glorioso Pescador de
+            Views! Ele atira um anzol de varredura na interface gráfica do XML procurando desesperadamente por uma
+            correspondência. Nós usamos a Tipagem Genérica <code>&lt;EditText&gt;</code> para exigir que o elemento
+            pescado tenha as regras e propriedades de caixa de texto digitável, rejeitando qualquer outra coisa.</div>
+          <div class="line-explanation"><strong>(R.id.edittext_weight)</strong>: A isca para o anzol! A função vai na
+            pasta mágica "R" (Resources), abre a seção de IDs únicos, encontra o CPF do campo de peso e puxa essa
+            conexão diretamente para a nossa variável Kotlin!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-43" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 43/58</div>
+        <h2 class="title"><i class="fas fa-list-ol"></i> Repetindo o Processo (Tipagem)</h2>
+        <div class="code-block">
+          val seekBarHeight = findViewById&lt;SeekBar&gt;(R.id.seek_height)
+          val textHeightValue = findViewById&lt;TextView&gt;(R.id.text_height_value)
+          val textResult = findViewById&lt;TextView&gt;(R.id.text_result)
+          val buttonCalculate = findViewById&lt;Button&gt;(R.id.button_calculate)
+          val buttonClear = findViewById&lt;Button&gt;(R.id.button_clear)
+        </div>
+        <div class="explanation">
+          <p>O sagrado ritual da Pescaria precisa ser repetido sistematicamente para todos os atores principais do palco
+            que interagem com a nossa matemática:</p>
+          <div class="line-explanation"><strong>A Tipagem Rígida e Segura (Strong Typing):</strong> Diferente de
+            linguagens bagunçadas, o Kotlin exige perfeição matemática. Veja como somos rigidamente obrigados a
+            especificar nos anzóis quem é do tipo <code>&lt;SeekBar&gt;</code>, quem é do tipo
+            <code>&lt;TextView&gt;</code> e quem é do tipo <code>&lt;Button&gt;</code>. Isso cria uma malha de ferro de
+            segurança.</div>
+          <div class="line-explanation"><strong>A Prevenção do Crash Inevitável:</strong> Se, por mera desatenção das
+            pressas, você tentasse pescar o "button_calculate" usando a isca e a classe de um
+            <code>&lt;TextView&gt;</code>, o Kotlin acionaria sirenes vermelhas e quebraria o código <em>antes
+              mesmo</em> de você instalar o app no celular (o famoso ClassCastException preventivo), avisando secamente
+            que um botão não pode se transformar mutagênicamente em um texto. Isso poupa milhões em horas de caça a
+            bugs!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-44" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 44/58</div>
+        <h2 class="title"><i class="fas fa-headphones-alt"></i> O Listener da Altura (SeekBar)</h2>
+        <div class="code-block">
+          seekBarHeight.setOnSeekBarChangeListener(object : OnSeekBarChangeListener { ...
+        </div>
+        <div class="explanation">
+          <p>As variáveis foram criadas. Agora o espetáculo começa. Vamos dar visão, tato e audição biônica ao cérebro
+            do Kotlin.</p>
+          <div class="line-explanation"><strong>seekBarHeight.setOnSeekBarChangeListener</strong>: Nós amarramos uma
+            verdadeira "Escuta Telefônica" (Listener - Ouvinte) física grudada ao componente da barra deslizante. Nós
+            comandamos em código: "Nunca durma! Fique inspecionando permanentemente 60 vezes por segundo se a digital
+            biométrica do usuário encostar nesta barra".</div>
+          <div class="line-explanation"><strong>object : OnSeekBarChangeListener</strong>: A engenharia do Google não
+            brinca em serviço. O sistema obriga a nossa Escuta a ser um Objeto especial altamente equipado. Este objeto
+            exige, compulsoriamente, a criação interna de 3 métodos (funções de ação) para a central de segurança: Uma
+            ação focada apenas para ouvir o milissegundo inicial em que o dedo encosta (StartTracking), uma câmera
+            metralhadora brutal para capturar cada milímetro arrastado no trilho (ProgressChanged), e um botão de ação
+            para quando a pessoa levanta o dedo e vai embora (StopTracking).</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-45" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 45/58</div>
+        <h2 class="title"><i class="fas fa-exchange-alt"></i> onProgressChanged &amp; Interpola&ccedil;&atilde;o</h2>
+        <div class="code-block">
+          override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+          textHeightValue.text = "$progress cm"
+        </div>
+        <div class="explanation">
+          <p>A Câmera Metralhadora de atualização biônica em tempo real operando no coração do <code>object</code> do
+            Slide anterior:</p>
+          <div class="line-explanation"><strong>onProgressChanged(..., progress: Int, ...)</strong>: Esta não é uma
+            função passiva. Ela literalmente entra em modo overdrive e pisca disparando feixes de atualização dezenas de
+            vezes a cada ínfimo deslizar de dedo do paciente na barra de rolagem. A palavra chave aqui é
+            <code>progress: Int</code> (Inteiro). É essa tubulação blindada que descarrega o número matemático exato da
+            bolinha (ex: 175) limpo no nosso código!</div>
+          <div class="line-explanation"><strong>A Interpolação de Strings Elegante ($):</strong> A mágica estética
+            final! Nós pescamos a gaveta do texto fantasma "textHeightValue" e decidimos repintar agressivamente a frase
+            que existe dentro dela (a propriedade <code>.text</code>). Nos velhos e tenebrosos tempos do Java, somar
+            letras de texto e números inteiros era uma matemática horripilante cheia de aspas, pontos e quebras. Mas no
+            divino Kotlin, apenas abra as aspas normais de um texto e use a majestosa <strong>Chave de Acesso $</strong>
+            colada à variável inteira. O Kotlin converte hipervelocemente e funde os dados inteiros sujos com o texto
+            limpo, gerando de cara a frase "175 cm" para a interface humana do paciente. Lindo, não acha?</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-46" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 46/58</div>
+        <h2 class="title"><i class="fas fa-eye"></i> Tornando Visível (UI Dinâmica)</h2>
+        <div class="code-block">
+          textHeightValue.visibility = View.VISIBLE
+          }
+        </div>
+        <div class="explanation">
+          <p>O grandioso truque ilusionista operando com design invisível:</p>
+          <div class="line-explanation"><strong>textHeightValue.visibility = View.VISIBLE</strong>: Lembra lá atrás nos
+            primórdios do Slide 23 em que usamos a impiedosa foice do "Gone" para matar e esmagar a existência do rótulo
+            da altura antes mesmo do paciente colocar a mão no app? E que a tela começava completamente preta e limpa,
+            sem zeros vazios? Então, eis o renascimento da Fênix. A partir da PRIMEIRA fração de segundo que o
+            metralhador <code>onProgressChanged</code> é ativado (o toque biométrico suado da mão), nós dispararmos um
+            comando de injeção direta no Cérebro do XML revertendo violentamente a visibilidade de volta para o estado
+            sólido "VISIBLE". O rótulo renasce das trevas no meio da tela como um raio pop-up, atualizadíssimo exibindo
+            "175 cm", perfeitamente harmônico! Pura obra prima.</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-47" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 47/58</div>
+        <h2 class="title"><i class="fas fa-hand-pointer"></i> O Grande Clique e a Lambda</h2>
+        <div class="code-block">
+          buttonCalculate.setOnClickListener {
+        </div>
+        <div class="explanation">
+          <p>Tudo o que fizemos acima foi preparar o palco. Agora, nós amarramos a dinamite lógica: o botão de Calcular!
+          </p>
+          <div class="line-explanation"><strong>buttonCalculate.setOnClickListener {</strong>: Observe a evolução
+            elegante da linguagem. Em vez de escrever o terrível código de engenharia antiga
+            <code>object : OnClickListener...</code> exigido pelo velho Java, o Kotlin simplifica abstraindo a
+            necessidade. Ele possui o recurso de <strong>Expressões Lambda</strong>. Nós simplesmente abrimos as chaves
+            <code>{ }</code> diretamente grudadas no método.</div>
+          <div class="line-explanation"><strong>O Escudo de Congelamento Temporal:</strong> O extenso código encapsulado
+            dentro destas chaves não é executado automaticamente quando o aplicativo é iniciado. Ele fica literalmente
+            congelado na memória e isolado no tempo. Ele só vai despertar, explodir e rodar quando (e somente se) o
+            sensor elétrico do vidro da tela detectar o suor da digital do paciente tocando exata e exclusivamente nas
+            coordenadas físicas daquele quadrado delimitado para ser o nosso botão Calcular!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-48" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 48/58</div>
+        <h2 class="title"><i class="fas fa-shield-alt"></i> O Campo de Força: Try / Catch</h2>
+        <div class="code-block">
+          try {
+          // ... Código que pode estourar bombas aqui
+          } catch (e: NumberFormatException) {
+          Toast.makeText(this, R.string.msg_invalid_weight, Toast.LENGTH_SHORT).show()
+          }
+        </div>
+        <div class="explanation">
+          <p>A Lei de Ouro da engenharia de software é: "Os usuários agem imprevisivelmente". O que aconteceria se o
+            usuário abrisse o app, não digitasse absolutamente nada, e imediatamente apertasse "Calcular"?</p>
+          <div class="line-explanation"><strong>A Bomba Matemática Inevitável:</strong> Nosso código tentaria agarrar o
+            Nada (uma caixa de texto vazia) e submetê-lo a uma equação algébrica. O processador da arquitetura ARM, em
+            desespero profundo, geraria uma bomba chamada <code>NumberFormatException</code>, causando um Crash nuclear
+            que fecharia abruptamente o aplicativo na cara do usuário com a notificação trágica de "O App parou".</div>
+          <div class="line-explanation"><strong>try { ... }</strong>: O comando <em>Try</em> (Tentar) é uma carapaça de
+            contenção antibombas impenetrável. Nós alertamos ao processador: "Execute esta perigosa divisão de IMC, MAS
+            se algo ameaçar explodir, segure a onda e não desligue o App".</div>
+          <div class="line-explanation"><strong>catch (e: Exception) { ... }</strong>: O comando Catch (Capturar) é o
+            nosso esquadrão cibernético. Se o bloco <code>Try</code> detectar falha fatal, a bomba é abortada e enviada
+            instantaneamente para a sala do <code>Catch</code>. Lá dentro, nós isolamos a bomba em silêncio e, usando a
+            classe de <strong>Toast</strong> (Torrada), arremessamos uma pílula negra temporária na base da tela
+            escrita: "Peso Inválido". Salvamos a vida do app e devolvemos educação polida ao usuário!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-49" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 49/58</div>
+        <h2 class="title"><i class="fas fa-sync"></i> A Conversão Bruta: Double</h2>
+        <div class="code-block">
+          val weight = editTextWeight.text.toString().toDouble()
+        </div>
+        <div class="explanation">
+          <p>Com segurança antibombas garantida dentro do bloco Try, começamos o sacrifício e dissecação dos dados:</p>
+          <div class="line-explanation"><strong>editTextWeight.text</strong>: Pega a isca da caixa de peso lá no corpo
+            de XML (Front-end) e arranca a propriedade estática bruta. Atenção: Esse material inicial é um Frankenstein
+            radioativo. Ele vem sobrecarregado de dados inóspitos de sistema, metadados, Spans gráficos e fontes (Texto
+            Editável). O processador engasgaria se visse isso.</div>
+          <div class="line-explanation"><strong>.toString()</strong>: Aplica um processo de purificação química radical.
+            Arranca todos os metadados bizarros de fonte do Android e devolve apenas os pacatos caracteres alfanuméricos
+            puros enfileirados em uma fita estéril (ex: a palavra escrita "70.5"). Mas para a programação pura, letras
+            formam blocos (Strings), não matemática. É impossível dividir a String "Batata" por dois.</div>
+          <div class="line-explanation"><strong>.toDouble()</strong>: A Grande Mutação. O comando transfigura a inútil
+            palavra alfanumérica, converte a carga estrutural e injeta o sangue da Alta Precisão Numérica Decimal nela
+            (Um <em>Double Float</em>), tornando-a finalmente o sagrado número de cálculo <code>70.5</code> que o núcleo
+            computacional pode digerir. Esse dado brilhante é armazenado para sempre na gaveta imutável chamada "weight"
+            (peso).</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-50" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 50/58</div>
+        <h2 class="title"><i class="fas fa-square-root-alt"></i> A Fórmula Oficial (Divisão Crítica)</h2>
+        <div class="code-block">
+          val height = seekBarHeight.progress.toDouble() / 100
+
+          if (height > 0) {
+          val imc = weight / (height * height)
+        </div>
+        <div class="explanation">
+          <p>A Matemática Internacional em curso profundo operando nas caldeiras do servidor do aplicativo:</p>
+          <div class="line-explanation"><strong>val height = ... / 100</strong>: Lembre-se, nosso limite métrico nativo
+            da barra horizontalSeekBar (Slide 22) operava com centenas, engolindo os números como Inteiros para evitar
+            vírgulas dolorosas. Ex: 175cm. Contudo, a rigorosa chancela mundial do IMC obriga a altura a estar em
+            <em>Metros</em> puros. Logo, dividimos os "175.0" com decimalidade por "100", forjando sem suor e lágrimas a
+            medida científica correta: <code>1.75</code>.</div>
+          <div class="line-explanation"><strong>if (height > 0)</strong>: Trava Militar Cibernética Primária. As duras
+            Leis da física computacional repudiam, com castigos apocalípticos de Crash Imediato, a heresia de tentar
+            "Dividir um número por ZERO" (pois arremessa o processador no caos de cálculos ao infinito). Essa
+            condicional só libera os dados se, e somente se, a Altura for material e estritamente superior a zero.</div>
+          <div class="line-explanation"><strong>val imc = weight / (height * height)</strong>: A cobiçada fórmula
+            sagrada: Peso dividido pela altura elevada à sua devida potência quadrática. Os sagazes parênteses isolam a
+            bolha gravitacional matemática da altura; o Kotlin é forçado a calcular "1.75 * 1.75" internamente com
+            precedência absoluta, e depois usa esse resultado engarrafado para desferir o último golpe dilacerador
+            contra a massa de "weight", produzindo finalmente nosso glorioso número mestre decimal: O IMC exato!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-51" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 51/58</div>
+        <h2 class="title"><i class="fas fa-magic"></i> A Formatação Elegante (String.format)</h2>
+        <div class="code-block">
+          textResult.text = String.format("IMC: %.2f", imc)
+          textResult.visibility = View.VISIBLE
+        </div>
+        <div class="explanation">
+          <p>As contorções matemáticas encerram. O IMC mágico foi decodificado. Mas um desafio visual terrível nos
+            impede de apresentá-lo puramente:</p>
+          <div class="line-explanation"><strong>A Maldição do Infinito Decimal:</strong> Se pesarmos 70kg e tivermos
+            exatos 1,69m, o abismo profundo do armazenamento "Double" descarregaria na nossa cara a monstruosidade
+            incompreensível: <code>24.5089457827...</code>. Isso não é um design sério.</div>
+          <div class="line-explanation"><strong>String.format("IMC: %.2f", imc)</strong>: Usamos o artefato milenar
+            "Formatação de Corda Numérica" nativo dos velhos portões do C++. Esta assustadora e pequena máscara
+            (<strong><code>%.2f</code></strong>) agarra o nosso número doentio por trás da cortina, decepa com um
+            machado todo o ruído excedente indesejável de decimais e o costura apresentando o número contendo
+            obrigatoriamente e rigidamente exatas duas singelas e belas casas Decimais de Fração (2f). O resultado
+            polido é: "IMC: 24.51".</div>
+          <div class="line-explanation"><strong>textResult.visibility = View.VISIBLE</strong>: É o Fim. Executamos o
+            feitiço mestre supremo! Nós resgatamos a massiva e gigantesca Text View inativa lá embaixo no arquivo XML,
+            que hibernava invisivelmente sob a foice maldita da escuridão do "Gone" desde o instante em que abrimos o
+            app. Arrancamos a mordaça dela, injetamos a nossa bela formatação "24.51" com poder divino, e mudamos seu
+            estado existencial visual de volta para VISIBLE. O colosso brilhante da coroa do App ergue-se flutuando
+            maravilhosamente e imponente acima dos botões com os resultados precisos, selando e concretizando para a
+            eternidade a nossa grande jornada computacional!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-52" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 52/58</div>
+        <h2 class="title"><i class="fas fa-box"></i> A pasta Mipmap (Desvendada)</h2>
+        <div class="explanation">
+          <p>O cérebro Kotlin e o corpo XML estão acoplados. Agora vamos empacotar nosso produto final. O grande ícone
+            oficial (Launcher Icon) que aparece na grade de aplicativos do celular do usuário não pode ser salvo no
+            antigo <code>drawable</code>. Ele obrigatoriamente reside na pasta suprema <code>res/mipmap</code>.</p>
+          <div class="line-explanation"><strong>A Diferença Crítica do Mipmap:</strong> Quando o usuário dá um beliscão
+            agressivo (zoom in) na tela inicial do celular ou troca para uma interface de tablet, o sistema operacional
+            (Launcher) precisa esticar monstruosamente os ícones. Se o nosso logotipo estivesse na pasta de imagem
+            normal, o sistema perderia as referências de escala e ele ficaria horrível e pixelado.</div>
+          <div class="line-explanation"><strong>A Coleção Absoluta de Tamanhos:</strong> A pasta <em>Mipmap</em>
+            armazena silenciosamente uma pirâmide matemática brutal de clones do mesmo ícone: mdpi, hdpi, xhdpi, xxhdpi
+            e xxxhdpi. Quando o sistema Android precisar do ícone gigantesco e imaculado, ele mergulhará no Mipmap e
+            extrairá especificamente a versão Premium Ultra-HD (xxxhdpi) sem um único dano gráfico, garantindo a nitidez
+            institucional perfeita do escudo do IFAM na mão do usuário!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-53" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 53/58</div>
+        <h2 class="title"><i class="fas fa-image"></i> Usando o Image Asset Studio</h2>
+        <div class="explanation">
+          <p>Nenhum programador moderno na face da terra abre o Photoshop para criar 6 recortes exatos do mesmo ícone
+            manualmente. Nós usamos a forja visual embutida do Google:</p>
+          <div class="line-explanation"><strong>1. O Image Asset Studio:</strong> Clique ferozmente com o botão direito
+            do mouse em cima da pasta central <code>res</code> -> <strong>New</strong> -> <strong>Image Asset</strong>.
+            Uma oficina gráfica gigantesca aparecerá na sua tela.</div>
+          <div class="line-explanation"><strong>2. Configurando as Camadas:</strong> Certifique-se no topo de que o
+            <em>Icon Type</em> está milimetricamente selecionado como "Launcher Icons (Adaptive and Legacy)". No sistema
+            Android moderno, os ícones têm profundidade com duas camadas 3D (O pano de fundo e o logotipo solto
+            flutuando na frente).</div>
+          <div class="line-explanation"><strong>3. Ajustando o Alvo:</strong> Na aba <em>Foreground</em> (Camada da
+            Frente), aponte o botão de Path (Caminho) para abrir nossa figura fonte raiz <code>logo.png</code>. Em
+            seguida, arraste o cursor de precisão "Resize" para encolher a imagem do escudo até que ele caiba
+            estritamente dentro do círculo de segurança tracejado do Android (A Safe Zone obrigatória).</div>
+          <div class="line-explanation"><strong>4. A Forja Final:</strong> Na aba subsequente <em>Background</em> (Fundo
+            da camada), selecione o menu "Color" e injete a cor Branca pura ou o Verde Institucional IFAM. Ao clicar
+            corajosamente em "Next" e "Finish", a máquina industrial do Android Studio fará todo o cálculo vetorial e
+            fabricará todas as pastas, versões, sombras e densidades geométricas do seu logotipo instantaneamente de uma
+            só vez. O Ícone nasceu vivo!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-54" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 54/58</div>
+        <h2 class="title"><i class="fas fa-tools"></i> Preparando seu Celular Físico</h2>
+        <div class="explanation">
+          <p>Rodar aplicativos em Emuladores Visuais (celulares virtuais renderizados na tela do PC) exige um Computador
+            Superpotente com muita memória RAM! Fazer o "Deploy" direto no hardware do seu celular físico real via cabo
+            é incrivelmente leve e absurdamente mais satisfatório. Eis o ritual cirúrgico do aparelho:</p>
+          <div class="line-explanation"><strong>1. Acordando o Hardware:</strong> Com seu aparelho Android real em mãos,
+            puxe o menu de <strong>Configurações</strong> -> Role até o abismo do rodapé e toque em <strong>Sobre o
+              Telefone</strong> -> <strong>Informações do Software</strong>.</div>
+          <div class="line-explanation"><strong>2. O Rito de Passagem Profissional:</strong> Encontre o pequeno botão
+            cinza oculto rotulado como <strong>"Número da Compilação"</strong> (ou Número da Versão/Build). Comece a
+            tapear e bater o dedo furiosamente em cima dele 7 vezes seguidas, sem pausa! A tela começará uma contagem
+            regressiva secreta, pedirá sua biometria e declarará solenemente com um balão preto: <em>"Você agora é um
+              Desenvolvedor!"</em>.</div>
+          <div class="line-explanation"><strong>3. A Ponte da Depuração:</strong> Aperte a seta para voltar até a página
+            inicial das Configurações. Mágica: Lá no fundo absoluto surgiu do nada um menu fantasma recém-destravado
+            chamado <strong>"Opções do Desenvolvedor"</strong>. Invada ele, desça um pouco a tela e engatilhe a chave
+            azul vital chamada <strong>"Depuração USB"</strong> (USB Debugging). Isso desativa o firewall impenetrável
+            do Android e avisa o celular que ele pode e deve aceitar injeção de código alienígena vindo do cabo!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-55" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 55/58</div>
+        <h2 class="title"><i class="fas fa-rocket"></i> O Clímax: RUN e Teste</h2>
+        <div class="explanation">
+          <p>O Clímax Absoluto do Curso. O ápice e o troféu final da engenharia do estudante!</p>
+          <div class="line-explanation"><strong>1. A Conexão Maciça:</strong> Conecte o seu celular físico diretamente
+            ao computador utilizando um cabo USB forte de transferência de dados. Imediatamente a tela preta do seu
+            celular acenderá violentamente com um alerta popup do protocolo militar de segurança: <em>"Confia nesta
+              chave digital/computador RSA?"</em>. Marque a caixinha "Sempre confiar" com precisão e esmague o botão
+            <strong>Permitir</strong>.</div>
+          <div class="line-explanation"><strong>2. O Radar do Android Studio:</strong> Olhe silenciosamente para o alto
+            da barra superior verde do Android Studio no monitor do seu computador. Em cinco segundos, o radar piscará e
+            aparecerá grafado o nome metálico do hardware real do seu celular lá em cima (Ex: <em>Samsung SM-G998B</em>
+            ou <em>Motorola Edge 30</em>). O cabo está transmitindo telemetria e oxigênio com sucesso total!</div>
+          <div class="line-explanation"><strong>3. O Lançamento Nuclear:</strong> Respire fundo. Exatamente ao lado do
+            nome da placa do seu celular, clique sem piedade nenhuma no massivo e inconfundível <strong>Botão Verde
+              Direcional de Play (▶)</strong> chamado oficialmente de "Run app" (Atalho vitalício Shift+F10).</div>
+          <div class="line-explanation"><strong>4. O Contato Físico (Impacto Final):</strong> Você acaba de acordar a
+            besta. O Operário Chefe Gradle (Slide 5) vai ranger, ligar as engrenagens da linha de montagem, comprimir
+            suas imagens vetoriais, fundir seus caracteres Kotlin com XML e gerar o pacote de chumbo puro .APK na
+            velocidade da luz. Ele empurrará o arquivo pelo cabo USB e o celular o instalará sorrateiramente na gaveta
+            do sistema. Aguarde 30 tensos segundos... E, de repente, sua tela verde vibrante do IFAM brotará nas suas
+            mãos de carne e osso. Coloque seu polegar físico nela. Teste o peso, puxe bruscamente a barra de altura e
+            aperte "Calcular". Ele funciona perfeitamente. Sinta-se profundamente honrado consigo mesmo neste exato
+            segundo: Você acabou de construir o seu primeiro Aplicativo Mobile Profissional na vida real!</div>
+          <br>
+          <h1 class="text-center text-success mt-5"><i class="fas fa-check-circle"></i> APP Finalizado!</h1>
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+
+<section id="slide-56" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 56/58</div>
+        <h2 class="title"><i class="fas fa-layer-group"></i> Bônus: Refatorando o Layout (Idade)</h2>
+        <div class="explanation">
+          <p>Uma aplicação profissional nunca nasce pronta. Ela evolui. Vamos inserir um campo de <strong>Idade</strong> na nossa interface!</p>
+          <div class="code-block">
+&lt;!-- Em activity_main.xml, adicione este EditText logo após o de Peso --&gt;
+&lt;EditText
+    android:id="@+id/edittext_age"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:hint="Idade"
+    android:inputType="number"
+    app:layout_constraintTop_toBottomOf="@id/edittext_weight"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent" /&gt;
+
+&lt;!-- E Mude o topo do Rótulo de Altura para ficar abaixo da Idade: --&gt;
+&lt;TextView
+    android:id="@+id/text_label_height"
+    app:layout_constraintTop_toBottomOf="@id/edittext_age" /&gt;
+          </div>
+          <div class="line-explanation"><strong>A Flexibilidade da ConstraintLayout:</strong> Ao amarrarmos o topo do texto de Altura à base do novo campo de Idade, o layout inteiro "desce" automaticamente. Não precisamos calcular pixels ou destruir o design existente!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-57" class="slide">
+      <div class="container">
+        <div class="slide-badge">Slide 57/58</div>
+        <h2 class="title"><i class="fas fa-brain"></i> Bônus: Atualizando o Cérebro (Kotlin)</h2>
+        <div class="explanation">
+          <p>O Layout agora tem a "porta" para a idade, mas o cérebro (Kotlin) precisa ler essa porta e exibir o dado no resultado!</p>
+          <div class="code-block">
+// 1. Vincule o novo campo:
+val editTextAge = findViewById&lt;EditText&gt;(R.id.edittext_age)
+
+buttonCalculate.setOnClickListener {
+    try {
+        val weight = editTextWeight.text.toString().toDouble()
+        
+        // 2. Extraia a Idade (e trate se estiver vazio):
+        val ageText = editTextAge.text.toString()
+        if (ageText.isEmpty()) {
+            Toast.makeText(this, "Digite uma idade", Toast.LENGTH_SHORT).show()
+            return@setOnClickListener
+        }
+        val age = ageText.toInt()
+        
+        val height = seekBarHeight.progress.toDouble() / 100
+        if (height &gt; 0) {
+            val imc = weight / (height * height)
+            
+            // 3. Formate a String para exibir Múltiplos Dados:
+            textResult.text = String.format("Idade: %d anos\nIMC: %.2f", age, imc)
+            textResult.visibility = View.VISIBLE
+        }
+    } catch (e: NumberFormatException) { /* ... */ }
+}
+          </div>
+          <div class="line-explanation"><strong>A Arte da Formata&ccedil;&atilde;o:</strong> Usando <code>String.format</code>, n&oacute;s mesclamos n&uacute;meros inteiros (<code>%d</code> para a idade) e n&uacute;meros decimais (<code>%.2f</code> para o IMC) em um &uacute;nico texto estruturado, separado por uma quebra de linha (<code>\n</code>). O usu&aacute;rio agora v&ecirc; um diagn&oacute;stico muito mais rico!</div>
+        </div>
+      </div>
+    </section>
+
+<section id="slide-58" class="slide" style="background-color: #fff9e6; border-left: 10px solid #FFC72C;">
+      <div class="container">
+        <div class="slide-badge" style="background-color: #FFC72C; color: #333;">Slide 58/58</div>
+        <h2 class="title" style="color: #856404;"><i class="fas fa-trophy"></i> EXERC&Iacute;CIO DESAFIO: Cr&eacute;ditos e Autoria</h2>
+        <div class="explanation" style="background-color: #fff3cd; border-color: #ffeeba;">
+          <p>Chegou a hora de deixar sua marca no projeto! O desafio consiste em evoluir o aplicativo para que ele apresente quem o desenvolveu.</p>
+          
+          <div class="card p-4 mb-4" style="border: 2px dashed #856404; background: white;">
+            <h5 class="fw-bold mb-3"><i class="fas fa-tasks"></i> O que deve ser feito?</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><strong>1. Nova Tela:</strong> Crie uma nova <em>Activity</em> no Android Studio para os "Cr&eacute;ditos".</li>
+              <li class="list-group-item"><strong>2. Layout de Autoria:</strong> Projete uma interface bonita exibindo seu Nome, Curso, Disciplina, Contato e a Data de hoje.</li>
+              <li class="list-group-item"><strong>3. Gatilho Criativo:</strong> Adicione um bot&atilde;o (ou ícone, ou menu) na tela principal que, ao ser clicado, abra esta nova tela.</li>
+            </ul>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="alert alert-warning">
+                <h6 class="fw-bold"><i class="fas fa-calendar-check"></i> Data de Entrega</h6>
+                <p class="mb-0"><strong>11/05/2026</strong></p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="alert alert-success">
+                <h6 class="fw-bold"><i class="fas fa-mobile-alt"></i> Apresenta&ccedil;&atilde;o</h6>
+                <p class="mb-0"><strong>Android:</strong> Rodando no aparelho físico.<br><strong>iOS Users:</strong> Projeto completo no computador.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 p-3 border rounded bg-white">
+            <p class="mb-0 font-monospace text-muted small">
+              Exemplo de Dados:<br>
+              Autor: [Seu Nome Completo]<br>
+              Curso: Programa&ccedil;&atilde;o de Jogos Digitais<br>
+              Disciplina: Desenvolvimento de Jogos Digitais<br>
+              Contato: [Seu e-mail]<br>
+              Data: 04/05/2026
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
